@@ -12,9 +12,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import clock.aut.SingleTon;
 import mock.MockServer;
 import service.base.MyGlobal;
@@ -23,7 +20,7 @@ import service.models.ObjectPostViewModel;
 import service.models.VoidResultViewModel;
 
 public abstract class BaseRepository {
-    protected String baseurl = MyGlobal.serverBaseUrl;
+    protected String baseurl = MyGlobal.serverBaseUrlApi;
 
     public static final boolean isMockServerEnabled = false;
     private MockServer mockServer = new MockServer();

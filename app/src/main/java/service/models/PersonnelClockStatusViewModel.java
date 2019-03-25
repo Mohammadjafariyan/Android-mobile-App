@@ -25,7 +25,7 @@ public class PersonnelClockStatusViewModel extends BaseViewModel {
     private String lastClockOut;
     private String status;
     private int color;
-    private String imageUrl;
+    private byte[] image;
 
     public PersonnelClockStatusViewModel(String name, String lastClockIn, String lastClockOut, String status
     , int color) {
@@ -78,11 +78,12 @@ this.color=color;
         this.color = color;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+
+    public byte[] getImage() {
+        return image;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }

@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!--     <uses-permission android:name="com.mapbox.mapboxsdk.telemetry.TelemetryService" /> -->
+    <!-- <uses-permission android:name="com.mapbox.mapboxsdk.telemetry.TelemetryService" /> -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -44,19 +44,24 @@
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
 
-        <activity android:name="clock.aut.GPSActivity"
+        <activity
+            android:name="clock.aut.GPSActivity"
             android:theme="@style/AsharDashar" />
-        <activity android:name="clock.aut.CameraActivity"
+        <activity
+            android:name="clock.aut.CameraActivity"
             android:theme="@style/AsharDashar" />
-        <activity android:name="clock.aut.WifiActivity"
+        <activity
+            android:name="clock.aut.WifiActivity"
             android:theme="@style/AsharDashar" />
-        <activity android:name="clock.aut.QRCodeActivity"
+        <activity
+            android:name="clock.aut.QRCodeActivity"
             android:theme="@style/AsharDashar" />
         <activity
             android:name="config.setting.SettingActivity"
             android:label="@string/title_activity_setting"
             android:theme="@style/AsharDashar" />
-        <activity android:name="config.setting.OfficeLocationsListActivity"
+        <activity
+            android:name="config.setting.OfficeLocationsListActivity"
             android:theme="@style/AsharDashar" />
         <activity android:name="config.setting.OfficeLocationActivity" />
         <activity android:name="config.setting.FaceConfigActivity" />
@@ -70,6 +75,10 @@
         <activity
             android:name="clock.aut.ShowUserLocationActivity"
             android:label="@string/title_activity_show_user_location"
+            android:theme="@style/AsharDashar.NoActionBar" />
+        <activity
+            android:name="clock.aut.WebActivity"
+            android:label="@string/title_activity_web"
             android:theme="@style/AsharDashar.NoActionBar"></activity>
     </application>
 

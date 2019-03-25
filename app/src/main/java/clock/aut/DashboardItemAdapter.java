@@ -1,6 +1,8 @@
 package clock.aut;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,7 +58,7 @@ public class DashboardItemAdapter extends ArrayAdapter<String> {
 
         statusTextView.setText(values[position].getStatus());
         lastInTextView.setText(values[position].getLastClockIn() + " ورود ");
-        lastOutTextView.setText(values[position].getLastClockOut()+ " خروج ");
+        lastOutTextView.setText(values[position].getLastClockOut() + " خروج ");
         personNameTextView.setText(values[position].getName());
 
 
@@ -75,7 +77,16 @@ public class DashboardItemAdapter extends ArrayAdapter<String> {
             imageView.setImageResource(R.drawable.ok);
         }*/
 
-        imageView.setImageResource(R.drawable.ic_home_black_24dp);
+        if (values[position].getImage() != null) {
+            Bitmap bmp = BitmapFactory.decodeByteArray
+                    (values[position].getImage(), 0, values[position].getImage().length);
+            // Set the Bitmap data to the ImageView
+            imageView.setImageBitmap(bmp);
+        } else {
+            //Default
+            imageView.setImageResource(R.drawable.ic_person_default_image);
+        }
+
 
         return rowView;
     }

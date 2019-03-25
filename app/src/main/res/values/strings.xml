@@ -15,6 +15,7 @@
     <string name="title_activity_clock">ClockActivity</string>
     <string name="title_home">ثبت ساعت</string>
     <string name="title_dashboard">داشبورد</string>
+    <string name="title_web">وب</string>
     <string name="title_notifications">تنظیمات</string>
     <string name="title_activity_gps">Map</string>
     <string name="title_activity_settings">Settings</string>
@@ -98,5 +99,11 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_show_user_location">ShowUserLocationActivity</string>
-    <string name="access_token" >pk.eyJ1IjoibW9oYW1tYWRqYWZhcml5YW43IiwiYSI6ImNqcXRqenkyczBha2k0M281NjQ0amVlNWwifQ.xD69Nt5VabUT8dwmlTOdWQ</string>
+    <string name="access_token">pk.eyJ1IjoibW9oYW1tYWRqYWZhcml5YW43IiwiYSI6ImNqcXRqenkyczBha2k0M281NjQ0amVlNWwifQ.xD69Nt5VabUT8dwmlTOdWQ</string>
+    <string name="title_activity_web">WebActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
 </resources>

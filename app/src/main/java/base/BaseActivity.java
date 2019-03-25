@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
@@ -16,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.example.moham.testandroidapp.LoginActivity;
+import com.example.moham.testandroidapp.R;
 
 import clock.aut.ClockActivity;
 import clock.aut.GPSActivity;
@@ -24,6 +26,8 @@ import config.setting.SettingActivity;
 import service.SettingsRepository;
 
 public class BaseActivity extends AppCompatActivity {
+    private SharedPreferences sharedPref;
+
     public void ringtone(){
         try {
             Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -52,6 +56,11 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void logout() {
 
+
+        sharedPref = BaseActivity.this.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        sharedPref.edit().clear().commit();
 
         SingleTon.getInstance().setToken(null);
         SingleTon.getInstance().setAdmin(false);

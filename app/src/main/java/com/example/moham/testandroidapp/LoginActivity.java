@@ -12,7 +12,6 @@ import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
 import android.content.CursorLoader;
@@ -42,7 +41,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import base.BaseActivity;
-import clock.aut.ClockActivity;
 import clock.aut.SingleTon;
 import service.CommonRepository;
 import service.LoginRepository;
@@ -116,11 +114,6 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         }
 
 
-        if (sharedPref.contains("username")) {
-            mEmailView.setText(sharedPref.getString("username", ""));
-            mPasswordView.setText(sharedPref.getString("password", ""));
-        }
-
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -133,9 +126,19 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         mProgressView = findViewById(R.id.login_progress);
 
 
+        if (sharedPref.contains("username")) {
+            mEmailView.setText(sharedPref.getString("username", ""));
+            mPasswordView.setText(sharedPref.getString("password", ""));
 
+            attemptLogin();
+        }
+
+
+
+
+/*
         mEmailView.setText("admin");
-        mPasswordView.setText("admin");
+        mPasswordView.setText("admin");*/
 
     }
 
@@ -365,7 +368,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-            repository = new LoginRepository(MyGlobal.serverBaseUrl);
+            repository = new LoginRepository(MyGlobal.serverBaseUrlApi);
             LoginViewModelResult model = null;
             try {
                 model = repository.Login(mEmail, mPassword);
@@ -396,9 +399,9 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
 
                     if (rememberMeCheckbox.isChecked()) {
 
-                        sharedPref.edit().putString("username", mEmail);
-                        sharedPref.edit().putString("password", mPassword);
-                        sharedPref.edit().putBoolean("rememberMeCheckbox", true);
+                        sharedPref.edit().putString("username", mEmail)
+                        .putString("password", mPassword)
+                        .putBoolean("rememberMeCheckbox", true).commit();
 
                     }
 

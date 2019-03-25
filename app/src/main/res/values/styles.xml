@@ -17,8 +17,12 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="mine" parent="Theme.AppCompat.Light.NoActionBar" >
+    <style name="mine" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorAccent">@color/accent_material_light_1</item>
     </style>
+
+    <style name="AsharDashar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AsharDashar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

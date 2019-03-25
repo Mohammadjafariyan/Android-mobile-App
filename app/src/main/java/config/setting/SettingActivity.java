@@ -33,6 +33,7 @@ import base.BaseActivity;
 import clock.aut.ClockActivity;
 import clock.aut.DashboardActivity;
 import clock.aut.SingleTon;
+import clock.aut.WebActivity;
 import service.OfficeLocationService;
 import service.SettingsRepository;
 
@@ -67,6 +68,13 @@ public class SettingActivity extends BaseActivity {
                     startActivityForResult(intent, 6);
                     return true;
                 case R.id.navigation_notifications:
+                    return true;
+                case R.id.navigation_web:
+
+                    //  mTextMessage.setText(R.string.title_notifications);
+                    intent = new Intent(SettingActivity.this
+                            , WebActivity.class);
+                    startActivityForResult(intent, 7);
                     return true;
             }
             return false;

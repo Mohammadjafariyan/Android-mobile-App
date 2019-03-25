@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_gps_locations"
+            android:icon="@drawable/ic_gps_locations"
+            android:title="GPS محل های کار" />
+        <item
+            android:id="@+id/nav_personnel_username_password"
+            android:icon="@drawable/ic_personnel_username_password"
+            android:title="نام کاربری و رمز عبور" />
+
+        <item
+            android:id="@+id/nav_punch_forget"
+            android:icon="@drawable/ic_punch_forget"
+            android:title="فراموشی کارت" />
+    </group>
+    <item android:title="گزارشات">
+        <menu>
+
+            <item
+                android:id="@+id/nav_worked_hours"
+                android:icon="@drawable/ic_worked_hours"
+                android:title="ریز کارکرد پرسنل" />
+
+            <item
+                android:id="@+id/nav_worked_hours_details"
+                android:icon="@drawable/ic_worked_hours_details"
+                android:title="خلاصه کارکرد پرسنل" />
+
+        </menu>
+    </item>
+
+    <item android:title="تنظیمات دیگر">
+        <menu>
+            <item
+                android:id="@+id/nav_obligated_range"
+                android:icon="@drawable/ic_obligated_range"
+                android:title="بازه موظفی" />
+            <item
+                android:id="@+id/nav_personnel"
+                android:icon="@drawable/ic_personnel"
+                android:title="پرسنل" />
+
+            <item
+                android:id="@+id/nav_workgroup"
+                android:icon="@drawable/ic_workgroup"
+                android:title="گروه کاری" />
+
+            <item
+                android:id="@+id/nav_obligated_range_workgroup"
+                android:icon="@drawable/ic_obligated_range_workgroup"
+                android:title="بازه موظفی گروه کاری" />
+
+
+        </menu>
+    </item>
+
+</menu>

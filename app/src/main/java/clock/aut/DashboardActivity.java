@@ -61,6 +61,13 @@ public class DashboardActivity extends BaseActivity {
                             , SettingActivity.class);
                     startActivityForResult(intent, 5);
                     return true;
+                case R.id.navigation_web:
+
+                    //  mTextMessage.setText(R.string.title_notifications);
+                    intent = new Intent(DashboardActivity.this
+                            , WebActivity.class);
+                    startActivityForResult(intent, 7);
+                    return true;
             }
             return false;
         }

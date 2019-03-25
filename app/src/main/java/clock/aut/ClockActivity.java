@@ -40,6 +40,7 @@ public class ClockActivity extends BaseActivity {
     private static final int Wifi_Activity = 3;
     private static final int QRCode_Activity = 4;
     private static final int Setting_Activity = 5;
+    private static final int Web_Activity = 7;
     private static final int Dashboard_Activity = 6;
     private TextView mTextMessage;
     private TextView timeTextMessage;
@@ -73,6 +74,13 @@ public class ClockActivity extends BaseActivity {
                     intent = new Intent(ClockActivity.this
                             , SettingActivity.class);
                     startActivityForResult(intent, Setting_Activity);
+                    return true;
+                case R.id.navigation_web:
+
+                    //  mTextMessage.setText(R.string.title_notifications);
+                    intent = new Intent(ClockActivity.this
+                            , WebActivity.class);
+                    startActivityForResult(intent, Web_Activity);
                     return true;
 
 
