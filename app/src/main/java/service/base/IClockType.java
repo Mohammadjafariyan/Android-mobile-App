@@ -1,7 +1,9 @@
 package service.base;
 
+import service.CallbackListener;
+
 public interface IClockType {
-    Object clockInAttempt() throws Exception;
+    Object clockInAttempt(CallbackListener callbackListener) throws Exception;
 
     boolean isSuccess();
 

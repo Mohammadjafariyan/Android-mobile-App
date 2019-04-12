@@ -33,6 +33,11 @@ android {
         targetCompatibility 1.8
     }
 
+
+    lintOptions {
+        checkReleaseBuilds false
+    }
+
 }
 
 repositories {
@@ -60,6 +65,7 @@ dependencies {
     implementation 'com.github.nkzawa:socket.io-client:0.3.0'
     implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v7:0.4.0'
     //   implementation 'org.testng:testng:6.9.6'
+    implementation 'com.squareup.okhttp3:okhttp:3.6.0'
 
 
 }

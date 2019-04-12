@@ -2,7 +2,6 @@ package service;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 
 import java.io.FileOutputStream;
 
@@ -28,7 +27,7 @@ public class CameraService implements IClockType {
     }
 
     @Override
-    public Object clockInAttempt() throws Exception {
+    public Object clockInAttempt(CallbackListener callbackListener) throws Exception {
 
         cameraController = new CameraController(context, new MyCallback() {
             @Override

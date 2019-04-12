@@ -19,8 +19,9 @@ public class GPSClockService implements IClockType {
 
 
     @Override
-    public Object clockInAttempt() throws Exception {
+    public Object clockInAttempt(CallbackListener callbackListener) throws Exception {
 
+        gPSTracker.setCallbackListener(callbackListener);
         Location location = gPSTracker.getLocation();
 
         isSuccess = true;

@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:text="در نقشه" />
+            android:text="@string/dashboard_inmap" />
 
         <ProgressBar
             android:id="@+id/dashboard_progress"

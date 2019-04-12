@@ -4,24 +4,24 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_obligated_range"
         android:title="@string/title_home" />
 
     <item
         android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/ic_personnel"
         android:title="@string/title_dashboard" />
 
 
     <item
         android:id="@+id/navigation_web"
-        android:icon="@drawable/ic_menu_manage"
-        android:title="@string/title_web" />
+        android:icon="@drawable/web"
+        android:title="@string/title_dashboard" />
 
 
     <item
         android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/setting"
         android:title="@string/title_notifications" />
 
 </menu>

@@ -27,15 +27,15 @@
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="نام مکان" />
+            android:text="@string/office_location_placename" />
 
         <EditText
             android:id="@+id/editText2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:contentDescription="نام مکان"
+            android:contentDescription="@string/office_location_placename"
             android:ems="10"
-            android:hint="نام مکان"
+            android:hint="@string/office_location_placename"
             android:inputType="textPersonName" />
 
 

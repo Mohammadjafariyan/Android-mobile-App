@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -45,6 +46,7 @@ public class ClockActivity extends BaseActivity {
     private TextView mTextMessage;
     private TextView timeTextMessage;
     private Button button;
+
 
     private SocketCommunication socketCommunication;
 
@@ -108,7 +110,11 @@ public class ClockActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clock);
-setTitle("ثبت ساعت");
+        setTitle("ثبت ساعت");
+
+
+        // fragment = (View) findViewById(R.id.fragment);
+
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -124,7 +130,6 @@ setTitle("ثبت ساعت");
         mProgressView = findViewById(R.id.clock_progress);
 
     }
-
 
 
     private void initSocketCommunication() {
@@ -158,23 +163,21 @@ setTitle("ثبت ساعت");
             @Override
             public void onClick(View view) {
 
-                if(!SingleTon.getInstance().isAdmin()){
+                if (!SingleTon.getInstance().isAdmin()) {
                     // اگر ادمین نیست و از یک دستگاه فعالا ست
-                    if(SingleTon.getInstance().getOneDeviceEnabled()){
-                        Toast.makeText(ClockActivity.this,"استفاده از یک دستگاه فعال است و فقط میتوانید از دستگاه ادمین ، ساعت زنی نمایید ",Toast.LENGTH_LONG).show();
+                    if (SingleTon.getInstance().getOneDeviceEnabled()) {
+                        Toast.makeText(ClockActivity.this, "استفاده از یک دستگاه فعال است و فقط میتوانید از دستگاه ادمین ، ساعت زنی نمایید ", Toast.LENGTH_LONG).show();
                         return;
                     }
                 }
 
 
-                mProgressView.setVisibility(View.VISIBLE );
-                runNext(0, Activity.RESULT_OK, SingleTon.getInstance().getOneDeviceEnabled());
-
-              /*  if (!SingleTon.getInstance().isClockedIn()) {
+                if (!SingleTon.getInstance().getLoggedIn()) {
+                    mProgressView.setVisibility(View.VISIBLE);
                     runNext(0, Activity.RESULT_OK, SingleTon.getInstance().getOneDeviceEnabled());
                 } else {
                     clockOut();
-                }*/
+                }
             }
         });
 
@@ -314,7 +317,10 @@ setTitle("ثبت ساعت");
     }
 
     public void clockOut() {
-        ClockInViewModelResult clock = null;
+
+        ClockInTask clockInTask = new ClockInTask();
+        clockInTask.execute((Void) null);
+       /* ClockInViewModelResult clock = null;
         try {
             clock = clockRepository.ClockOut();
 
@@ -327,7 +333,7 @@ setTitle("ثبت ساعت");
             timeTextMessage = (TextView) findViewById(R.id.textView5);
             timeTextMessage.setText(e.getMessage());
             timeTextMessage.setTextColor(Color.RED);
-        }
+        }*/
     }
 
     public void clockIn() {
@@ -336,26 +342,28 @@ setTitle("ثبت ساعت");
     }
 
     public void clockInPost() {
-        if (SingleTon.getInstance().isOk()) {
 
-            ClockInViewModelResult clock = null;
-            try {
-                clock = clockRepository.ClockIn();
-
-
-
-                SingleTon.getInstance().setMessage(clock.getMessage());
-                SingleTon.getInstance().setSuccess(clock.isSuccess());
-                SingleTon.getInstance().setClockLastMessage(clock.getMessage());
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                SingleTon.getInstance().setMessage(e.getMessage());
-
+        if (SingleTon.getInstance().getLoggedIn() == false) {
+            // login
+            if (SingleTon.getInstance().isOk() == false) {
+//not ok
+                return;
             }
-
-
         }
+
+        ClockInViewModelResult clock = null;
+        try {
+            clock = clockRepository.ClockIn();
+
+            SingleTon.getInstance().setMessage(clock.getMessage());
+            SingleTon.getInstance().setSuccess(clock.isSuccess());
+            SingleTon.getInstance().setClockLastMessage(clock.getMessage());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            SingleTon.getInstance().setMessage(e.getMessage());
+        }
+
     }
 
     private void setCurrentTime(boolean setColor) {
@@ -363,21 +371,20 @@ setTitle("ثبت ساعت");
         timeTextMessage = (TextView) findViewById(R.id.textView5);
 
 
-        if(SingleTon.getInstance().getClockLastMessage()==null){
-           // String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+        if (SingleTon.getInstance().getClockLastMessage() == null) {
+            // String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
             timeTextMessage.setText("-");
 
             if (setColor) {
                 timeTextMessage.setTextColor(Color.GREEN);
             }
-        }else{
-            if(SingleTon.getInstance().getSuccess()){
+        } else {
+            if (SingleTon.getInstance().getSuccess()) {
                 timeTextMessage.setText(SingleTon.getInstance().getClockLastMessage());
                 timeTextMessage.setTextColor(Color.GREEN);
-            }else{
+            } else {
             }
         }
-
 
 
     }
@@ -413,18 +420,20 @@ setTitle("ثبت ساعت");
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
-            mProgressView.setVisibility(View.GONE );
+            mProgressView.setVisibility(View.GONE);
 
             if (aBoolean) {
                 timeTextMessage = (TextView) findViewById(R.id.textView5);
 
-                if(SingleTon.getInstance().getSuccess()){
+                if (SingleTon.getInstance().getSuccess()) {
                     timeTextMessage.setText(SingleTon.getInstance().getMessage());
                     timeTextMessage.setTextColor(Color.GREEN);
+
+                    SingleTon.getInstance().setLoggedIn(!SingleTon.getInstance().getLoggedIn());
                     ringtone();
-                }else{
+                } else {
                     ringtone();
-                    Toast.makeText(ClockActivity.this,SingleTon.getInstance().getMessage() , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ClockActivity.this, SingleTon.getInstance().getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
 

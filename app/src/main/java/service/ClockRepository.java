@@ -17,10 +17,15 @@ public class ClockRepository extends BaseRepository {
 
         ClockInViewModel clock = new ClockInViewModel();
         clock.setDatetime(new Date());
-        clock.setImageView(SingleTon.getInstance().getImageView());
-        clock.setLocation(SingleTon.getInstance().getLocation());
-        clock.setqRCodeContent(SingleTon.getInstance().getqRCodeContent());
-        clock.setScanResults(SingleTon.getInstance().getScanResults());
+
+        //logout
+        if(SingleTon.getInstance().getLoggedIn()==false){
+            clock.setImageView(SingleTon.getInstance().getImageView());
+            clock.setLocation(SingleTon.getInstance().getLocation());
+            clock.setqRCodeContent(SingleTon.getInstance().getqRCodeContent());
+            clock.setScanResults(SingleTon.getInstance().getScanResults());
+        }
+
 
         String res = post(this.baseurl + "/" + clockInUrl,clock);
 

@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.example.moham.testandroidapp.R;
 
+import java.io.ByteArrayOutputStream;
+
 import service.models.PersonnelClockStatusViewModel;
 
 public class DashboardItemAdapter extends ArrayAdapter<String> {
@@ -80,6 +82,11 @@ public class DashboardItemAdapter extends ArrayAdapter<String> {
         if (values[position].getImage() != null) {
             Bitmap bmp = BitmapFactory.decodeByteArray
                     (values[position].getImage(), 0, values[position].getImage().length);
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+
             // Set the Bitmap data to the ImageView
             imageView.setImageBitmap(bmp);
         } else {

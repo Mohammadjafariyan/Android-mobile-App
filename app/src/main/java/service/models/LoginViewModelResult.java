@@ -52,6 +52,14 @@ public class LoginViewModelResult extends  BaseViewModel {
     public void setFaceRecognation(boolean faceRecognation) {
         this.faceRecognation = faceRecognation;
     }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
 }
 
 

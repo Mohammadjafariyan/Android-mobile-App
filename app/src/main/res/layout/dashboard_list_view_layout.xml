@@ -15,7 +15,7 @@
         android:id="@+id/personNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="personNameTextView"
+        android:text="@string/personNameTextView"
         android:layout_toRightOf="@id/icon"
         android:textSize="15dp"></TextView>
 
@@ -24,7 +24,7 @@
         android:id="@+id/statusTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="statusTextView"
+        android:text="@string/statusTextView"
         android:layout_toRightOf="@id/icon"
         android:layout_alignBottom="@id/icon"
         android:layout_marginLeft="5dp"
@@ -35,7 +35,7 @@
         android:id="@+id/lastInTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="lastOutTextView"
+        android:text="@string/lastOutTextView"
         android:layout_alignParentRight="true"
         android:layout_below="@id/personNameTextView"
         android:textSize="15dp"></TextView>
@@ -45,7 +45,7 @@
         android:id="@+id/lastOutTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="lastInTextView"
+        android:text="@string/lastInTextView"
         android:textSize="15dp"
         android:layout_alignParentRight="true"
         android:layout_below="@id/lastInTextView"

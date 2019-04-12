@@ -16,6 +16,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
@@ -24,14 +25,18 @@ import android.util.Log;
 
 import java.util.List;
 
+import base.BaseActivity;
 import clock.aut.GPSActivity;
+import service.CallbackListener;
 
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class GPSTracker extends Service implements LocationListener {
 
     private final Context mContext;
-    private GPSActivity mActivity;
+    private BaseActivity mActivity;
+    private boolean isBreaked = false;
+    private CallbackListener callbackListener;
 
 
     public void setLocation(Location location) {
@@ -68,17 +73,17 @@ public class GPSTracker extends Service implements LocationListener {
     double longitude; // Longitude
 
     // The minimum distance to change Updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 1; // 10 meters
 
     // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
+    private static final long MIN_TIME_BW_UPDATES = /*1000 * 60 **/ 1; // 1 minute
 
     // Declaring a Location Manager
     protected LocationManager locationManager;
 
     public GPSTracker(Context context, Activity activity) {
         this.mContext = context;
-        this.mActivity = (GPSActivity) activity;
+        this.mActivity = (BaseActivity) activity;
     }
 
 
@@ -112,27 +117,46 @@ public class GPSTracker extends Service implements LocationListener {
 
                 throw new Exception("اجازه GPS داده نشده است");
             }
-            locationManager.requestLocationUpdates(
-                    LocationManager.NETWORK_PROVIDER,
-                    MIN_TIME_BW_UPDATES,
-                    MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+
+            if (isNetworkEnabled)
+                locationManager.requestLocationUpdates(
+                        LocationManager.NETWORK_PROVIDER,
+                        MIN_TIME_BW_UPDATES,
+                        MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+
+
             Log.d("Network", "Network");
-            if (locationManager != null) {
-                location = locationManager
-                        .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                if (location != null) {
-                    latitude = location.getLatitude();
-                    longitude = location.getLongitude();
-                }
-            }
+
         } else {
             throw new Exception("لطفا ابتدا اینترنت خود را فعال نمایید");
+        }
+
+
+        if (locationManager != null) {
+            if (location == null)
+                location = locationManager
+                        .getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            if (location == null)
+                location = locationManager
+                        .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if (location == null)
+                location = locationManager
+                        .getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+
+
+            if (location != null) {
+                callbackListener.OnResult(location);
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+                return location;
+            }
 
         }
         // If GPS enabled, get latitude/longitude using GPS Services
         if (isGPSEnabled) {
             boolean isMock = false;
-            if (android.os.Build.VERSION.SDK_INT >= 18 && location != null) {
+            if (Build.VERSION.SDK_INT >= 18 && location != null) {
                 isMock = location.isFromMockProvider();
             } else {
                 isMock = Settings.Secure.getString(mContext.getContentResolver(), Settings.Secure.ALLOW_MOCK_LOCATION).equals("0") ? false : true;
@@ -142,37 +166,16 @@ public class GPSTracker extends Service implements LocationListener {
                 throw new Exception("اطلاعات GPS دستگاه شما فیک تشخیص داده شد");
 
 
-            if (location == null) {
-                locationManager.requestLocationUpdates(
-                        LocationManager.GPS_PROVIDER,
-                        MIN_TIME_BW_UPDATES,
-                        MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                Log.d("GPS Enabled", "GPS Enabled");
-                if (locationManager != null) {
-                    int counter = 0;
-                    while (location == null && counter < locationManager.getAllProviders().size()) {
-                        for (String providerName : locationManager.getAllProviders()) {
+            if(isGPSEnabled)
+            locationManager.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER,
+                    MIN_TIME_BW_UPDATES,
+                    MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
 
-                            location = locationManager
-                                    .getLastKnownLocation(providerName);
-                            if (location != null)
-                                break;
-                        }
-                    }
-
-
-                    if (location != null) {
-                        latitude = location.getLatitude();
-                        longitude = location.getLongitude();
-                    }
-                }
-            }
         } else {
             throw new Exception("لطفا ابتدا GPS را فعال نمایید");
         }
-        if (location == null) {
-            throw new Exception("مکان یابی مشخص نشد");
-        }
+
 
         return location;
     }
@@ -200,40 +203,6 @@ public class GPSTracker extends Service implements LocationListener {
         // return latitude
         return latitude;
     }
-   /* public static boolean areThereMockPermissionApps(Context context) {
-        int count = 0;
-
-        PackageManager pm = context.getPackageManager();
-        List<ApplicationInfo> packages =
-                pm.getInstalledApplications(PackageManager.GET_META_DATA);
-
-        for (ApplicationInfo applicationInfo : packages) {
-            try {
-                PackageInfo packageInfo = pm.getPackageInfo(applicationInfo.packageName,
-                        PackageManager.GET_PERMISSIONS);
-
-                // Get Permissions
-                String[] requestedPermissions = packageInfo.requestedPermissions;
-
-                if (requestedPermissions != null) {
-                    for (int i = 0; i < requestedPermissions.length; i++) {
-                        if (requestedPermissions[i]
-                                .equals("android.permission.ACCESS_MOCK_LOCATION")
-                                && !applicationInfo.packageName.equals(context.getPackageName())) {
-                            count++;
-                        }
-                    }
-                }
-            } catch (PackageManager.NameNotFoundException e) {
-                Log.e("Got exception " , e.getMessage());
-            }
-        }
-
-        if (count > 0)
-            return true;
-        return false;
-    }
-*/
 
     /**
      * Function to get longitude
@@ -292,11 +261,61 @@ public class GPSTracker extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
+
+        this.location = location;
+        isBreaked = true;
+
+        if (location == null) {
+
+            Log.d("GPS Enabled", "GPS Enabled");
+            if (locationManager != null) {
+                int counter = 0;
+                while (location == null && locationManager.getAllProviders().size() < counter) {
+                    for (String providerName : locationManager.getAllProviders()) {
+
+                        counter++;
+                        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    ActivityCompat#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for ActivityCompat#requestPermissions for more details.
+                            callbackListener.OnError("دسترسی به سرویس دهند های مکان یابی داده نشده است");
+
+                            return;
+                        }
+                        location = locationManager
+                                .getLastKnownLocation(providerName);
+                        if (location != null)
+                            break;
+                    }
+                }
+
+
+                if (location != null) {
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+                }
+            }
+        }
+
+
+        stopUsingGPS();
+        if (location == null) {
+            callbackListener.OnError("مکان یافت نشد");
+        }
+        callbackListener.OnResult(location);
+
+
     }
 
 
     @Override
     public void onProviderDisabled(String provider) {
+
+
     }
 
 
@@ -315,4 +334,11 @@ public class GPSTracker extends Service implements LocationListener {
         return null;
     }
 
+    public void setCallbackListener(CallbackListener callbackListener) {
+        this.callbackListener = callbackListener;
+    }
+
+    public CallbackListener getCallbackListener() {
+        return callbackListener;
+    }
 }

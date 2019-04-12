@@ -30,7 +30,6 @@
             android:id="@+id/listView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Medium Text"
             />
 
         <Switch
@@ -39,28 +38,28 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:gravity="right|center_vertical"
-            android:text="ثبت ساعت از یک دستگاه" />
+            android:text="@string/office_setting_one_device" />
         <Switch
             android:id="@+id/faceRecognation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:gravity="right|center_vertical"
-            android:text="استفاده از تشخیص چهره" />
+            android:text="@string/office_face_recognation" />
         <Switch
             android:id="@+id/notificationsEnabled"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:gravity="right|center_vertical"
-            android:text="notifications" />
+            android:text="@string/title_notifications" />
 
         <Button
             android:id="@+id/logoutButton"
             android:layout_width="wrap_content"
             android:layout_gravity="right"
             android:layout_height="wrap_content"
-            android:text="خروج"
+            android:text="@string/setting_quit"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="0dp" />
     </LinearLayout>

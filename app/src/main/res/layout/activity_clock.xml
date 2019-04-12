@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="صفحه ساعت زنی ورود و خروج"
+            android:text="@string/title_clock_page_name"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp"
@@ -37,7 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text=""
             android:textSize="30sp"
             tools:text="@tools:sample/date/hhmmss" />
 
@@ -45,6 +44,11 @@
             android:id="@+id/MsgText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+   <!--     <fragment
+            android:id="@+id/fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />-->
 
         <ScrollView
             android:id="@+id/login_form"
@@ -55,6 +59,7 @@
                 android:id="@+id/email_login_form"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal|center"
                 android:orientation="vertical">
 
                 <android.support.design.widget.TextInputLayout
@@ -71,11 +76,15 @@
 
                 <Button
                     android:id="@+id/email_sign_in_button"
-                    style="?android:textAppearanceSmall"
+                    style="@style/AsharDashar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ثبت ساعت"
-                    android:textStyle="bold" />
+                    android:background="@color/accent_material_light_1"
+                    android:text="@string/title_clock_page_clockin"
+                    android:textColor="@color/ic_launcher_background"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:theme="@style/mine" />
 
                 <!-- Login progress -->
                 <ProgressBar
@@ -85,15 +94,14 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/email_sign_in_button"
                     android:layout_gravity="center"
-                    android:visibility="gone"
-                    android:layout_marginBottom="8dp" />
+                    android:layout_marginBottom="8dp"
+                    android:visibility="gone" />
 
                 <FrameLayout
                     android:id="@+id/camera_preview"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    />
+                    android:layout_weight="1" />
             </LinearLayout>
 
         </ScrollView>

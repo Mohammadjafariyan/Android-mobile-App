@@ -1,12 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
     tools:context="clock.aut.GPSActivity">
+
+   <LinearLayout
+       android:id="@+id/linearLayout5"
+       android:layout_width="0dp"
+       android:layout_height="0dp"
+       android:orientation="vertical"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent">
+
+      <TextView
+          android:id="@+id/textView4"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/mtrl_bottomappbar_height"
+          android:gravity="center_vertical|center"
+          android:text="@string/reading_gps" />
+
+      <ProgressBar
+          android:id="@+id/clock_progress"
+          style="?android:attr/progressBarStyleLarge"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/email_sign_in_button"
+          android:layout_gravity="center_vertical|fill_vertical|center"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+   </LinearLayout>
 
    <!-- <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/mapView"

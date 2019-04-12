@@ -26,6 +26,7 @@ public class SharedData {
     private String message;
     private boolean success;
     private String clockLastMessage;
+    private boolean loggedIn;
 
     public String getToken() {
         return token;
@@ -176,5 +177,14 @@ public class SharedData {
 
     public String getClockLastMessage() {
         return clockLastMessage;
+    }
+
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
+
+    public boolean getLoggedIn() {
+        return loggedIn;
     }
 }

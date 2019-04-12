@@ -27,7 +27,7 @@
             android:id="@+id/saveOrCreateNewOfficeLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ثبت مکان جدید" />
+            android:text="@string/office_location_list_create_new" />
 
         <ListView
             android:id="@+id/officeLocationsListView"

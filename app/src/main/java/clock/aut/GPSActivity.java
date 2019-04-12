@@ -24,6 +24,7 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 
 import base.BaseActivity;
+import service.CallbackListener;
 import service.base.ClockType;
 import service.base.ClockTypeFactory;
 import service.base.IClockType;
@@ -46,6 +47,8 @@ public class GPSActivity extends BaseActivity {
         setTitle("مکان یابی");
 
         clockInAttempt();
+
+
     }
 
     @Override
@@ -73,25 +76,42 @@ public class GPSActivity extends BaseActivity {
 
     private void clockInAttempt() {
         IClockType clock = null;
-        Location location= null;
+        final Location[] location = {null};
         try {
 
             Toast.makeText(getApplicationContext(), "در حال خواندن GPS", Toast.LENGTH_LONG).show();
 
             clock = clockTypeFactory.GetClockType(ClockType.GPS);
-             location = (Location) clock.clockInAttempt();
-            if (!clock.isSuccess()) {
-                Toast.makeText(getApplicationContext(),  clock.getMessage(),Toast.LENGTH_LONG);
+              clock.clockInAttempt(
+                     new CallbackListener(){
+
+                         @Override
+                         public void OnResult(Object o){
+                             location[0] = (Location) o;
+
+                             Toast.makeText(getApplicationContext(), "با موفقیت دیتکت شد", Toast.LENGTH_LONG).show();
+                             SingleTon.getInstance().setLocation(location[0]);
+                             setResult(Activity.RESULT_OK);
+                             finish();
+                         }
+
+                         @Override
+                         public void OnError(String msg){
+                                 Toast.makeText(getApplicationContext(), msg,Toast.LENGTH_LONG);
 
 
-                Intent intent= new Intent();
-                intent.putExtra("error", clock.getMessage());
-                setResult(Activity.RESULT_CANCELED, intent);
-                finish();
-                return;
-            }
+                                 Intent intent= new Intent();
+                                 intent.putExtra("error", msg);
+                                 setResult(Activity.RESULT_CANCELED, intent);
+                                 finish();
+                                 return;
+                             }
 
-            setResult(Activity.RESULT_OK);
+                     }
+
+             );
+
+
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(getApplicationContext(),  e.getMessage(),Toast.LENGTH_LONG);
@@ -103,19 +123,11 @@ public class GPSActivity extends BaseActivity {
             finish();
             return;
         }
-        Toast.makeText(getApplicationContext(), "با موفقیت دیتکت شد", Toast.LENGTH_LONG).show();
-        SingleTon.getInstance().setLocation(location);
 
-        finish();
 
         // showAlert("پیغام", "با موفقیت دیتکت شد");
 
     }
 
-    public boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
+
 }

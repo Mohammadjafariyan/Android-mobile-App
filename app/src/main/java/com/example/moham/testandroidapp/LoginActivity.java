@@ -396,6 +396,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                     SingleTon.getInstance().setNotificationsEnabled(model.getNotificationsEnabled());
                     SingleTon.getInstance().setFaceRecognation(model.getFaceRecognation());
                     SingleTon.getInstance().setClockLastMessage(model.getMessage());
+                    SingleTon.getInstance().setLoggedIn(model.isLoggedIn());
 
                     if (rememberMeCheckbox.isChecked()) {
 

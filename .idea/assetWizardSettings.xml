@@ -34,7 +34,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/D:/installed/Users/moham/AppData/Local/Temp/7ZipSfx.005/Downloads/Compressed/Android.Studio.3.2.1.0.Pack.x64/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/hardware/ic_device_hub_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/D:/installed/Users/moham/AppData/Local/Temp/7ZipSfx.005/Downloads/Compressed/Android.Studio.3.2.1.0.Pack.x64/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_build_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -44,7 +44,48 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_obligated_range_workgroup" />
+                                      <entry key="imageAsset" value="C:\Users\moham\Desktop\large_hero_image2 (2).jpg" />
+                                      <entry key="outputName" value="setting" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                            <entry key="launcher">
+                              <value>
+                                <PersistentState>
+                                  <option name="children">
+                                    <map>
+                                      <entry key="foregroundImage">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="scalingPercent" value="45" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="backgroundAssetType" value="COLOR" />
+                                      <entry key="backgroundColor" value="f9fff7" />
+                                      <entry key="foregroundImage" value="C:\Users\moham\Downloads\06e148db-f5d0-476d-8921-0812203d4aaa.png" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                            <entry key="launcherLegacy">
+                              <value>
+                                <PersistentState>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="C:\Users\moham\Downloads\06e148db-f5d0-476d-8921-0812203d4aaa.png" />
                                     </map>
                                   </option>
                                 </PersistentState>

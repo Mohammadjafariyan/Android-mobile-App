@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="ورود به سیستم"
+        android:text="@string/dashboard_login"
         android:textAllCaps="false"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp"
@@ -38,13 +38,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="نسل بعدی سیستم های تردد "
-        tools:text="لطفا جهت ورود به سیستم نام کاربری و رمز عبور را از پشتیبانی دریافت نمایید" />
+        android:text="@string/dashboard_next_generation"
+        tools:text="@string/description" />
 
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|fill_horizontal"
+        android:layout_marginTop="@dimen/nav_header_vertical_spacing">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -61,13 +63,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:hint="نام کاربری"
+                    android:hint="@string/login_username"
                     android:inputType="text"
                     android:maxLines="1"
                     android:selectAllOnFocus="true"
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
+
+
 
 
             <android.support.design.widget.TextInputLayout
@@ -79,7 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:hint="رمز عبور"
+                    android:hint="@string/login_password"
                     android:imeActionId="6"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
@@ -90,28 +94,34 @@
 
             </android.support.design.widget.TextInputLayout>
 
-
             <CheckBox
                 android:id="@+id/rememberMeCheckbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="مرا به یاد داشته باش" />
-
+                android:text="@string/login_rememberme" />
             <Button
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="ورود به سیستم"
+                android:background="@color/accent_material_light_1"
+                android:text="@string/dashboard_login"
+                android:textColor="@color/ic_launcher_background"
                 android:textStyle="bold" />
 
         </LinearLayout>
     </ScrollView>
 
-    <ListView
-        android:id="@+id/list"
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp"></ListView>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/mtrl_bottomappbar_height"
+        android:autoLink="web"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/web_link" />
+
+
 </LinearLayout>
