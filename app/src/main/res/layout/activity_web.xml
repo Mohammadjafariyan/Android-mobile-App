@@ -9,11 +9,17 @@
     tools:openDrawer="start">
 
 
-
-    <include
-        layout="@layout/app_bar_web"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/web_app_bar_web"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content">
+
+        <include
+            layout="@layout/app_bar_web"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

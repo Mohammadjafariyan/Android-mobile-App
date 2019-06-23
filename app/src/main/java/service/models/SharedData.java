@@ -2,10 +2,14 @@ package service.models;
 
 import android.location.Location;
 import android.net.wifi.ScanResult;
+import android.os.Bundle;
 import android.widget.ImageView;
+
+import com.instacart.library.truetime.TrueTime;
 
 import java.util.List;
 
+import clock.aut.TimeUpdateTask;
 import service.base.ClockType;
 
 public class SharedData {
@@ -27,6 +31,8 @@ public class SharedData {
     private boolean success;
     private String clockLastMessage;
     private boolean loggedIn;
+    private Bundle webViewState;
+    private TimeUpdateTask timeUpdateTask;
 
     public String getToken() {
         return token;
@@ -186,5 +192,25 @@ public class SharedData {
 
     public boolean getLoggedIn() {
         return loggedIn;
+    }
+
+    public void setWebViewState(Bundle webViewState) {
+        this.webViewState = webViewState;
+    }
+
+    public Bundle getWebViewState() {
+        return webViewState;
+    }
+
+    public boolean isClockUpdate() {
+        return TrueTime.isInitialized();
+    }
+
+    public void setTimeUpdateTask(TimeUpdateTask timeUpdateTask) {
+        this.timeUpdateTask = timeUpdateTask;
+    }
+
+    public TimeUpdateTask getTimeUpdateTask() {
+        return timeUpdateTask;
     }
 }

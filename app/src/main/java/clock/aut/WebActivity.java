@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -71,6 +72,23 @@ public class WebActivity extends BaseActivity
     };
     private ProgressBar progressBar;
 
+    private void initPullButton() {
+        SwipeRefreshLayout pullToRefresh = findViewById(R.id.web_app_bar_web);
+        pullToRefresh.setDistanceToTriggerSync(3);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                webView.reload();
+
+                progressBar.setVisibility(View.VISIBLE);
+
+
+
+                pullToRefresh.setRefreshing(false);
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +97,8 @@ public class WebActivity extends BaseActivity
         setSupportActionBar(toolbar);
 
         progressBar= (ProgressBar)findViewById(R.id.web_progress);
+
+        initPullButton();
 
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.webnavigation);
@@ -106,30 +126,47 @@ public class WebActivity extends BaseActivity
 
 
         webView = (WebView) findViewById(R.id.webView);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setDomStorageEnabled(true);
-        webView.getSettings().setGeolocationEnabled(true);
-        webView.getSettings().setSupportMultipleWindows(true); // This forces ChromeClient enabled.
+
+        if(SingleTon.getInstance().getWebViewState()==null){
 
 
-        //webView.getSettings().;
-        webView.setWebChromeClient(new ChromeCallback());  //HERE IS THE MAIN CHANGE
-        webView.setWebViewClient(new Callback() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return false;
-            }
-        });
-        String url = MyGlobal.serverBaseUrlMobile;
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.getSettings().setDomStorageEnabled(true);
+            webView.getSettings().setGeolocationEnabled(true);
+            webView.getSettings().setSupportMultipleWindows(true); // This forces ChromeClient enabled.
+
+
+            //webView.getSettings().;
+            webView.setWebChromeClient(new ChromeCallback());  //HERE IS THE MAIN CHANGE
+            webView.setWebViewClient(new Callback() {
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    view.loadUrl(url);
+                    return false;
+                }
+            });
+            String url = MyGlobal.serverBaseUrlMobile;
 
        /* AAWebViewModel vm=new AAWebViewModel();
         Gson gson=new Gson();
         String json=gson.toJson(vm);*/
 
-       String token="token="+SingleTon.getInstance().getToken();
+            String token="token="+SingleTon.getInstance().getToken();
 
-        webView.postUrl(url,EncodingUtils.getBytes(token, "UTF-8"));
+            webView.postUrl(url,EncodingUtils.getBytes(token, "UTF-8"));
+        }else{
+
+            webView.restoreState(SingleTon.getInstance().getWebViewState());
+            progressBar.setVisibility(View.INVISIBLE);
+        }
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        webView.saveState(bundle);
+        SingleTon.getInstance().setWebViewState(bundle);
     }
 
     @Override

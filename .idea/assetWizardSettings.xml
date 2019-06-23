@@ -34,7 +34,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/D:/installed/Users/moham/AppData/Local/Temp/7ZipSfx.005/Downloads/Compressed/Android.Studio.3.2.1.0.Pack.x64/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_build_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/D:/installed/Users/moham/AppData/Local/Temp/7ZipSfx.005/Downloads/Compressed/Android.Studio.3.2.1.0.Pack.x64/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/social/ic_person_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -45,7 +45,9 @@
                                   <option name="values">
                                     <map>
                                       <entry key="imageAsset" value="C:\Users\moham\Desktop\large_hero_image2 (2).jpg" />
-                                      <entry key="outputName" value="setting" />
+                                      <entry key="outputName" value="notification_icon" />
+                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="themeColor" value="e51997" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -72,7 +74,6 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="f9fff7" />
                                       <entry key="foregroundImage" value="C:\Users\moham\Downloads\06e148db-f5d0-476d-8921-0812203d4aaa.png" />
                                     </map>
                                   </option>

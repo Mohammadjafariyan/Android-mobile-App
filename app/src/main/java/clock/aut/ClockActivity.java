@@ -2,27 +2,28 @@ package clock.aut;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.moham.testandroidapp.LoginActivity;
 import com.example.moham.testandroidapp.R;
 import com.github.nkzawa.socketio.client.Socket;
+import com.instacart.library.truetime.TrueTime;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.text.DateFormat;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import base.BaseActivity;
@@ -47,6 +48,7 @@ public class ClockActivity extends BaseActivity {
     private TextView timeTextMessage;
     private Button button;
 
+    String time_not_update_msg = "سرویس ساعت جهانی آپدیت نشد بنابراین امکان استفاده از سیستم با ساعت اشتباه وجود ندارد";
 
     private SocketCommunication socketCommunication;
 
@@ -91,6 +93,10 @@ public class ClockActivity extends BaseActivity {
         }
     };
     private View mProgressView;
+    private ImageView takenPicture;
+    private MyVectorClock vectorAnalogClock;
+    private TextView msgText;
+    private Button refresh_clock;
 
 
     @Override
@@ -112,6 +118,18 @@ public class ClockActivity extends BaseActivity {
         setContentView(R.layout.activity_clock);
         setTitle("ثبت ساعت");
 
+        msgText = (TextView) findViewById(R.id.MsgText);
+        refresh_clock = (Button) findViewById(R.id.refresh_clock);
+        refresh_clock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateTime();
+            }
+        });
+
+
+
+
 
         // fragment = (View) findViewById(R.id.fragment);
 
@@ -129,6 +147,18 @@ public class ClockActivity extends BaseActivity {
 
         mProgressView = findViewById(R.id.clock_progress);
 
+
+        fromService = getIntent().getBooleanExtra("fromService", false);
+        if (fromService) {
+            clockOnclickHelper();
+        }
+        showTimeUpdateMessage(SingleTon.getInstance().getTimeUpdateTask().isInitialized());
+
+    }
+
+    private void updateTime() {
+        TimeUpdateTask task = new TimeUpdateTask();
+        task.execute((Void) null);
     }
 
 
@@ -163,25 +193,30 @@ public class ClockActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
 
-                if (!SingleTon.getInstance().isAdmin()) {
-                    // اگر ادمین نیست و از یک دستگاه فعالا ست
-                    if (SingleTon.getInstance().getOneDeviceEnabled()) {
-                        Toast.makeText(ClockActivity.this, "استفاده از یک دستگاه فعال است و فقط میتوانید از دستگاه ادمین ، ساعت زنی نمایید ", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                }
-
-
-                if (!SingleTon.getInstance().getLoggedIn()) {
-                    mProgressView.setVisibility(View.VISIBLE);
-                    runNext(0, Activity.RESULT_OK, SingleTon.getInstance().getOneDeviceEnabled());
-                } else {
-                    clockOut();
-                }
+                clockOnclickHelper();
             }
         });
 
 
+    }
+
+    private void clockOnclickHelper() {
+
+        if (!SingleTon.getInstance().isAdmin()) {
+            // اگر ادمین نیست و از یک دستگاه فعالا ست
+            if (SingleTon.getInstance().getOneDeviceEnabled()) {
+                Toast.makeText(ClockActivity.this, "استفاده از یک دستگاه فعال است و فقط میتوانید از دستگاه ادمین ، ساعت زنی نمایید ", Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
+
+
+        if (!SingleTon.getInstance().getLoggedIn()) {
+            mProgressView.setVisibility(View.VISIBLE);
+            runNext(0, Activity.RESULT_OK, SingleTon.getInstance().getOneDeviceEnabled());
+        } else {
+            clockOut();
+        }
     }
 
 
@@ -337,8 +372,12 @@ public class ClockActivity extends BaseActivity {
     }
 
     public void clockIn() {
-        ClockInTask clockInTask = new ClockInTask();
-        clockInTask.execute((Void) null);
+        if (SingleTon.getInstance().isClockUpdate()) {
+            ClockInTask clockInTask = new ClockInTask();
+            clockInTask.execute((Void) null);
+        } else {
+            Toast.makeText(ClockActivity.this, time_not_update_msg, Toast.LENGTH_LONG).show();
+        }
     }
 
     public void clockInPost() {
@@ -413,6 +452,29 @@ public class ClockActivity extends BaseActivity {
 
     }
 
+    public void showTimeUpdateMessage(boolean isInitialized) {
+
+
+        if (isInitialized == false) {
+            if (vectorAnalogClock != null)
+                vectorAnalogClock.setVisibility(View.GONE);
+            button.setVisibility(View.GONE);
+            Toast.makeText(ClockActivity.this, time_not_update_msg, Toast.LENGTH_LONG).show();
+            msgText.setTextColor(Color.RED);
+            msgText.setText(time_not_update_msg);
+            msgText.setTextSize(18);
+            refresh_clock.setVisibility(View.VISIBLE);
+        } else {
+            button.setVisibility(View.VISIBLE);
+
+            refresh_clock.setVisibility(View.GONE);
+            setAnalogueClock();
+            vectorAnalogClock.setVisibility(View.VISIBLE);
+
+        }
+
+    }
+
 
     class ClockInTask extends AsyncTask<Void, Void, Boolean> {
 
@@ -429,8 +491,14 @@ public class ClockActivity extends BaseActivity {
                     timeTextMessage.setText(SingleTon.getInstance().getMessage());
                     timeTextMessage.setTextColor(Color.GREEN);
 
+
+                   // boolean isloggedIn = SingleTon.getInstance().getLoggedIn();
                     SingleTon.getInstance().setLoggedIn(!SingleTon.getInstance().getLoggedIn());
                     ringtone();
+
+                    //    if (isloggedIn)
+                    setTakenPicture();
+
                 } else {
                     ringtone();
                     Toast.makeText(ClockActivity.this, SingleTon.getInstance().getMessage(), Toast.LENGTH_SHORT).show();
@@ -462,4 +530,38 @@ public class ClockActivity extends BaseActivity {
         }
     }
 
+    private void setAnalogueClock() {
+        vectorAnalogClock = findViewById(R.id.clock);
+
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.setTime(TrueTime.now());
+        // calendar.add(Calendar.HOUR,-2);
+        //customization
+        vectorAnalogClock.setCalendar(calendar)
+                .setDiameterInDp(400.0f)
+                .setOpacity(1.0f)
+                .setShowSeconds(true)
+                .setColor(Color.BLUE);
+    }
+
+    private void setTakenPicture() {
+
+        if (SingleTon.getInstance().getImageView() == null) {
+            return;
+        }
+
+        vectorAnalogClock.setVisibility(View.GONE);
+
+        takenPicture = (ImageView) findViewById(R.id.takenImage);
+
+
+        Bitmap image = ((BitmapDrawable) SingleTon.getInstance().getImageView().getDrawable()).getBitmap();
+
+        takenPicture.setImageBitmap(image);
+        takenPicture.setVisibility(View.VISIBLE);
+        takenPicture.setMaxHeight(500);
+    }
+
 }
+

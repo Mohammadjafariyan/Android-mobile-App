@@ -29,8 +29,7 @@
         <ListView
             android:id="@+id/listView"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="159dp" />
 
         <Switch
             android:id="@+id/oneDeviceEnabled"
@@ -54,11 +53,20 @@
             android:gravity="right|center_vertical"
             android:text="@string/title_notifications" />
 
+        <Switch
+            android:id="@+id/title_shake_clocking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="right|center_vertical"
+            android:text="@string/title_shake_clocking" />
+
         <Button
             android:id="@+id/logoutButton"
             android:layout_width="wrap_content"
-            android:layout_gravity="right"
             android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="@android:dimen/notification_large_icon_height"
             android:text="@string/setting_quit"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="0dp" />

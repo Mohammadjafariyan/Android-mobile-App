@@ -4,10 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -24,6 +22,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -44,6 +43,8 @@ import base.BaseActivity;
 import clock.aut.SingleTon;
 import service.CommonRepository;
 import service.LoginRepository;
+import service.backgorund_services.MySocketService;
+import service.backgorund_services.ShakeService;
 import service.base.MyGlobal;
 import service.models.LoginViewModelResult;
 import service.models.UserClockTypeViewModel;
@@ -80,14 +81,19 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private SharedPreferences sharedPref;
     private CheckBox rememberMeCheckbox;
+    private TextView linktowebsiteTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setTitle("سیستم تردد آشار داشار");
+
+
+        fromService = getIntent().getBooleanExtra("fromService", false);
+
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -104,8 +110,15 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
             }
         });
 
-        sharedPref = LoginActivity.this.getSharedPreferences(
+
+
+        /*sharedPref = LoginActivity.this.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+*/
+
+        registerServices(MySocketService.class);
+        registerServices(ShakeService.class);
+
 
         rememberMeCheckbox = (CheckBox) findViewById(R.id.rememberMeCheckbox);
 
@@ -130,10 +143,24 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
             mEmailView.setText(sharedPref.getString("username", ""));
             mPasswordView.setText(sharedPref.getString("password", ""));
 
-            attemptLogin();
+
+         /*   try {
+
+                SingleTon.loadInstance(sharedPref);
+                loginAfterPost();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                Toast.makeText(LoginActivity.this, "اشکالی در لود دیتای سیستم بوجود آمد ", Toast.LENGTH_LONG).show();
+                attemptLogin();
+            }*/
+            //attemptLogin();
         }
 
 
+        linktowebsiteTextView = (TextView) findViewById(R.id.linktowebsite);
+        linktowebsiteTextView.setMovementMethod(LinkMovementMethod.getInstance());
 
 
 /*
@@ -143,10 +170,18 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
     }
 
 
+    public void loginAfterPost() {
+        Intent intent = new Intent(LoginActivity.this, clock.aut.ClockActivity.class);
+        intent.putExtra("fromService", fromService);
+        startActivity(intent);
+    }
+
+
     protected void accessControl() {
 
 
     }
+
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
             return;
@@ -375,9 +410,9 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
             } catch (Exception e) {
                 e.printStackTrace();
 
-                Handler handler =  new Handler(LoginActivity.this.getMainLooper());
-                handler.post( new Runnable(){
-                    public void run(){
+                Handler handler = new Handler(LoginActivity.this.getMainLooper());
+                handler.post(new Runnable() {
+                    public void run() {
                         Toast.makeText(LoginActivity.this, " خطای ورود به سیستم " + e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
@@ -398,11 +433,13 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                     SingleTon.getInstance().setClockLastMessage(model.getMessage());
                     SingleTon.getInstance().setLoggedIn(model.isLoggedIn());
 
+                  //  SingleTon.saveInstance(sharedPref);
+
                     if (rememberMeCheckbox.isChecked()) {
 
                         sharedPref.edit().putString("username", mEmail)
-                        .putString("password", mPassword)
-                        .putBoolean("rememberMeCheckbox", true).commit();
+                                .putString("password", mPassword)
+                                .putBoolean("rememberMeCheckbox", true).commit();
 
                     }
 
@@ -502,12 +539,13 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
             if (success) {
 
                 //finish();
-                startActivity(new Intent(LoginActivity.this, clock.aut.ClockActivity.class));
+
+                loginAfterPost();
             } else {
 
-                Handler handler =  new Handler(LoginActivity.this.getMainLooper());
-                handler.post( new Runnable(){
-                    public void run(){
+                Handler handler = new Handler(LoginActivity.this.getMainLooper());
+                handler.post(new Runnable() {
+                    public void run() {
                         showAlert("خطا", "در دریافت روش های ثبت ساعت از سرور خطایی بوجود آمد");
                     }
                 });

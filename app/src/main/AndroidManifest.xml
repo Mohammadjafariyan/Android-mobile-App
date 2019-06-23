@@ -21,7 +21,32 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AsharDashar">
+        android:theme="@style/AsharDashar"
+        android:name="base.MyApplication"
+        >
+
+        <service android:name="service.backgorund_services.ShakeService"
+            android:exported="true"
+            android:process=":ServiceProcess"
+            />
+        <receiver android:name="service.backgorund_services.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+
+        <service android:name="service.backgorund_services.MySocketService"
+            android:exported="true"
+            android:process=":ServiceProcess"
+            />
+        <receiver android:name="service.backgorund_services.MyWebSocketBootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"

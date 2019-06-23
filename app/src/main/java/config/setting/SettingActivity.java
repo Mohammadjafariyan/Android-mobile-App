@@ -1,17 +1,14 @@
 package config.setting;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,10 +20,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.moham.testandroidapp.LoginActivity;
 import com.example.moham.testandroidapp.R;
 
-import java.time.Clock;
+import java.net.Socket;
 import java.util.Set;
 
 import base.BaseActivity;
@@ -36,6 +32,11 @@ import clock.aut.SingleTon;
 import clock.aut.WebActivity;
 import service.OfficeLocationService;
 import service.SettingsRepository;
+import service.backgorund_services.MySocketService;
+import service.backgorund_services.ServiceTools;
+import service.backgorund_services.ShakeService;
+import service.socketServices.SocketHolder;
+import service.socketServices.UserClockListener;
 
 public class SettingActivity extends BaseActivity {
 
@@ -84,6 +85,26 @@ public class SettingActivity extends BaseActivity {
     private Button outButton;
     private Switch faceRecognation;
     private Switch notificationsEnabled;
+    private Switch clockInwithShake;
+    private SharedPreferences sharedPref;
+    private View.OnClickListener clockInwithShakeListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          //  sharedPref.edit().putBoolean(MyGlobal.ShakeEnabledName, clockInwithShake.isChecked());
+
+            if (clockInwithShake.isChecked()) {
+                registerServices(ShakeService.class);
+            } else {
+                try {
+                    unregisterServices(ShakeService.class);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(SettingActivity.this, e.getMessage(), Toast.LENGTH_LONG);
+                }
+            }
+
+        }
+    };
 
 
     @Override
@@ -102,6 +123,21 @@ public class SettingActivity extends BaseActivity {
         oneDeviceEnabledSwitch.setChecked(SingleTon.getInstance().getOneDeviceEnabled());
         faceRecognation.setChecked(SingleTon.getInstance().getFaceRecognation());
         notificationsEnabled.setChecked(SingleTon.getInstance().getNotificationsEnabled());
+
+
+       /* sharedPref = SettingActivity.this.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);*/
+
+        clockInwithShake = (Switch) findViewById(R.id.title_shake_clocking);
+
+
+        boolean isRunning = ServiceTools.isServiceRunning(
+                SettingActivity.this.getApplicationContext(),
+                ShakeService.class);
+        clockInwithShake.setChecked(isRunning);
+
+
+        clockInwithShake.setOnClickListener(clockInwithShakeListener);
 
 
         String[] arr = null;
@@ -244,6 +280,17 @@ public class SettingActivity extends BaseActivity {
                     return;
                 }
 
+                if(!isChecked){
+                    MySocketService.MySocketServiceSingleton.UnRegisterListener(UserClockListener.UniqName);
+                }else{
+                    try {
+                        MySocketService.MySocketServiceSingleton.registerListener(UserClockListener.UniqName,SettingActivity.this);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(SettingActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+                }
+
                 saveNotificationsEnabledTask(isChecked);
 
               /*  try {
@@ -278,21 +325,23 @@ public class SettingActivity extends BaseActivity {
         task.execute((Void) null);
     }
 
-    class NotificationsEnabledTask extends  GenericTask{
+    class NotificationsEnabledTask extends GenericTask {
 
         protected void doPost() throws Exception {
             settingsRepository.saveNotificationsEnabled(SingleTon.getInstance().getNotificationsEnabled());
         }
+
         protected void revertPost() {
             SingleTon.getInstance().setNotificationsEnabled(!SingleTon.getInstance().getNotificationsEnabled());
         }
 
     }
 
-    class FaceRecognationTask extends  GenericTask  {
+    class FaceRecognationTask extends GenericTask {
         protected void doPost() throws Exception {
             settingsRepository.saveFaceRecognation(SingleTon.getInstance().getFaceRecognation());
         }
+
         protected void revertPost() {
             SingleTon.getInstance().setFaceRecognation(!SingleTon.getInstance().getFaceRecognation());
         }
@@ -304,13 +353,13 @@ public class SettingActivity extends BaseActivity {
         protected void doPost() throws Exception {
             settingsRepository.saveIsOneDeviceEnabled(SingleTon.getInstance().getOneDeviceEnabled());
         }
+
         protected void revertPost() {
             SingleTon.getInstance().setOneDeviceEnabled(!SingleTon.getInstance().getOneDeviceEnabled());
         }
 
 
     }
-
 
 
     class WifiConfigTask extends GenericTask {
@@ -328,7 +377,8 @@ public class SettingActivity extends BaseActivity {
 
     class FaceImageConfigTask extends GenericTask {
 
-        protected void doPost() throws Exception { settingsService.savePersonImage(SingleTon.getInstance().getImageView());
+        protected void doPost() throws Exception {
+            settingsService.savePersonImage(SingleTon.getInstance().getImageView());
         }
 
         protected void revertPost() {
@@ -336,9 +386,6 @@ public class SettingActivity extends BaseActivity {
         }
 
     }
-
-
-
 
 
     public class GenericTask extends AsyncTask<Void, Void, Boolean> {
@@ -381,6 +428,7 @@ public class SettingActivity extends BaseActivity {
 
         protected void doPost() throws Exception {
         }
+
         protected void revertPost() {
         }
     }

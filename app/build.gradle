@@ -42,6 +42,9 @@ android {
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://jitpack.io"
+    }
 }
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -66,6 +69,17 @@ dependencies {
     implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v7:0.4.0'
     //   implementation 'org.testng:testng:6.9.6'
     implementation 'com.squareup.okhttp3:okhttp:3.6.0'
+   /* implementation 'io.socket:socket.io-client:1.0.0'
+    implementation 'tech.gusavila92:java-android-websocket-client:1.2.2'
+*/
 
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.0.1'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.0.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.0.1'
+    implementation 'turki.alkhateeb:vectoranalogclock:1.0.0'
+    implementation 'com.github.instacart.truetime-android:library-extension-rx:3.4'
+
+    // or if you want the vanilla version of Truetime:
+    implementation 'com.github.instacart.truetime-android:library:3.4'
 
 }

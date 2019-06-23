@@ -18,6 +18,8 @@ public class ClockRepository extends BaseRepository {
         ClockInViewModel clock = new ClockInViewModel();
         clock.setDatetime(new Date());
 
+
+        //todo:در سومین لوگین ورود نمیزند چون لوکیشن انتخاب نمی کند
         //logout
         if(SingleTon.getInstance().getLoggedIn()==false){
             clock.setImageView(SingleTon.getInstance().getImageView());

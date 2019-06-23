@@ -16,11 +16,14 @@
     <string name="title_home">ثبت ساعت</string>
     <string name="title_dashboard">داشبورد</string>
     <string name="title_web">وب</string>
-    <string name="title_notifications">تنظیمات</string>
+    <string name="title_settings">تنظیمات</string>
+    <string name="title_notifications">اطلاع رسانی</string>
+    <string name="title_shake_clocking">ساعت زنی با تکان دادن</string>
     <string name="title_activity_gps">Map</string>
     <string name="title_activity_settings">Settings</string>
-    <string name="title_clock_page_name">صفحه ساعت زنی ورود و خروج</string>
+    <string name="title_clock_page_name">لطفا جهت ثبت کارت ورود یا خروج دگمه ثبت ساعت زیر را لمس نمایید</string>
     <string name="title_clock_page_clockin">ثبت ساعت</string>
+    <string name="update_time">آپدیت ساعت از اینترنت</string>
     <string name="dashboard_inmap">در نقشه</string>
     <string name="dashboard_login">ورود به سیستم</string>
     <string name="dashboard_next_generation">    نسل بعدی سیستم های تردد</string>

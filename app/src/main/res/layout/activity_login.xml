@@ -114,14 +114,16 @@
     </ScrollView>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/linktowebsite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/mtrl_bottomappbar_height"
-        android:autoLink="web"
         android:clickable="true"
         android:gravity="center"
+        android:linksClickable="true"
+        android:textColorLink="@color/colorPrimary"
         android:text="@string/web_link" />
+    <!--  android:autoLink="web"-->
 
 
 </LinearLayout>
