@@ -44,6 +44,8 @@ public class LoginRepository extends BaseRepository {
             throw new Exception("اطلاعات بازگشتی از سرور اشتباه است و در تبدیل دیتا خطا بوجود آمد");
         }
 
+
+
         if(!model.isSuccess()){
             throw new Exception(model.getMessage());
         }

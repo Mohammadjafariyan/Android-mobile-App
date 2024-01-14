@@ -3,5 +3,15 @@
 
     <style name="MaterialBlueMine" parent="android:Theme.Material.Light" >
         <item name="android:colorAccent">@color/accent_material_light_1</item>
+        <item name="android:fontFamily">@font/vazirmedium</item>
+    </style>
+
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@drawable/background6_hdpi</item>
+        <item name="android:fontFamily">@font/vazirmedium</item>
     </style>
 </resources>

@@ -10,7 +10,10 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +24,7 @@ import com.github.nkzawa.socketio.client.Socket;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +37,7 @@ import service.models.ClockInViewModelResult;
 import service.models.UserClockTypeViewModel;
 import service.other.SocketCommunication;
 
-public class ClockActivity extends BaseActivity {
+public class ClockActivity extends BaseActivity  implements AdapterView.OnItemSelectedListener {
 
     private static final int GPS_Activity = 1;
     private static final int Camera_Activity = 2;
@@ -110,6 +114,8 @@ public class ClockActivity extends BaseActivity {
         setContentView(R.layout.activity_clock);
 setTitle("ثبت ساعت");
 
+        getSupportActionBar().hide();
+
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -121,7 +127,33 @@ setTitle("ثبت ساعت");
 
         // initSocketCommunication();
 
-        mProgressView = findViewById(R.id.clock_progress);
+        //mProgressView = findViewById(R.id.clock_progress);
+
+
+        // Spinner element
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+
+        // Spinner click listener
+        spinner.setOnItemSelectedListener(this);
+
+        // Spinner Drop down elements
+        List<String> categories = new ArrayList<String>();
+        categories.add("Automobile");
+        categories.add("Business Services");
+        categories.add("Computers");
+        categories.add("Education");
+        categories.add("Personal");
+        categories.add("Travel");
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, categories);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
+        // attaching data adapter to spinner
+        spinner.setAdapter(dataAdapter);
 
     }
 
@@ -153,7 +185,7 @@ setTitle("ثبت ساعت");
     }
 
     private void initButton() {
-        button = (Button) findViewById(R.id.email_sign_in_button);
+        /*button = (Button) findViewById(R.id.email_sign_in_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -170,13 +202,13 @@ setTitle("ثبت ساعت");
                 mProgressView.setVisibility(View.VISIBLE );
                 runNext(0, Activity.RESULT_OK, SingleTon.getInstance().getOneDeviceEnabled());
 
-              /*  if (!SingleTon.getInstance().isClockedIn()) {
+              *//*  if (!SingleTon.getInstance().isClockedIn()) {
                     runNext(0, Activity.RESULT_OK, SingleTon.getInstance().getOneDeviceEnabled());
                 } else {
                     clockOut();
-                }*/
+                }*//*
             }
-        });
+        });*/
 
 
     }
@@ -318,15 +350,15 @@ setTitle("ثبت ساعت");
         try {
             clock = clockRepository.ClockOut();
 
-            timeTextMessage = (TextView) findViewById(R.id.textView5);
+     /*       timeTextMessage = (TextView) findViewById(R.id.textView5);
             timeTextMessage.setText(clock.getMessage());
-            timeTextMessage.setTextColor(Color.BLACK);
+            timeTextMessage.setTextColor(Color.BLACK);*/
 
         } catch (Exception e) {
             e.printStackTrace();
-            timeTextMessage = (TextView) findViewById(R.id.textView5);
+           /* timeTextMessage = (TextView) findViewById(R.id.textView5);
             timeTextMessage.setText(e.getMessage());
-            timeTextMessage.setTextColor(Color.RED);
+            timeTextMessage.setTextColor(Color.RED);*/
         }
     }
 
@@ -360,7 +392,7 @@ setTitle("ثبت ساعت");
 
     private void setCurrentTime(boolean setColor) {
 // init time :
-        timeTextMessage = (TextView) findViewById(R.id.textView5);
+      /*  timeTextMessage = (TextView) findViewById(R.id.textView5);
 
 
         if(SingleTon.getInstance().getClockLastMessage()==null){
@@ -376,7 +408,7 @@ setTitle("ثبت ساعت");
                 timeTextMessage.setTextColor(Color.GREEN);
             }else{
             }
-        }
+        }*/
 
 
 
@@ -406,6 +438,18 @@ setTitle("ثبت ساعت");
 
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        String item = parent.getItemAtPosition(position).toString();
+
+        // Showing selected spinner item
+        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+    }
+    public void onNothingSelected(AdapterView<?> arg0) {
+        // TODO Auto-generated method stub
+    }
+
 
     class ClockInTask extends AsyncTask<Void, Void, Boolean> {
 
@@ -416,7 +460,7 @@ setTitle("ثبت ساعت");
             mProgressView.setVisibility(View.GONE );
 
             if (aBoolean) {
-                timeTextMessage = (TextView) findViewById(R.id.textView5);
+               // timeTextMessage = (TextView) findViewById(R.id.textView5);
 
                 if(SingleTon.getInstance().getSuccess()){
                     timeTextMessage.setText(SingleTon.getInstance().getMessage());

@@ -5,12 +5,16 @@ import android.util.Log;
 import com.google.gson.Gson;
 
 import org.apache.http.Header;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+
+import java.io.OutputStream;
 
 import clock.aut.SingleTon;
 import mock.MockServer;
@@ -37,6 +41,50 @@ public abstract class BaseRepository {
         }
     }
 
+
+    protected String get(String url) throws Exception {
+
+
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet(url);
+
+        String token =  SingleTon.getInstance().getToken();
+
+
+        httpGet.addHeader("Content-Type", " application/json; charset=utf-8");
+        httpGet.addHeader("Authorization", "Bearer " + token);
+        Log.d("http client post set", url);
+
+
+        HttpResponse response = httpclient.execute(httpGet);
+        Log.d("YourAsync", "Executed");
+
+
+        Log.d("allHeaders", "reading: ");
+        Header[] allHeaders = response.getAllHeaders();
+        for (Header h:allHeaders ) {
+            Log.d(h.getName(),h.getValue() );
+        }
+        Log.d("allHeaders", "end ");
+
+        Header[] headers = response.getHeaders("token");
+        if (headers.length > 1) {
+            findAndSetTokenInHeaders(headers);
+        }
+
+        if (response.getStatusLine().getStatusCode() == 200) {
+            return EntityUtils.toString(response.getEntity());
+
+        } else {
+            HttpEntity entity = response.getEntity();
+            String responseString = EntityUtils.toString(entity, "UTF-8");
+            System.out.println(responseString);
+
+            throw new Exception(response.getStatusLine().getReasonPhrase());
+        }
+
+    }
+
     protected String post(String url, Object o) throws Exception {
 
         if (isMockServerEnabled) {
@@ -61,13 +109,20 @@ public abstract class BaseRepository {
 
 
         httppost.addHeader("Content-Type", " application/json; charset=utf-8");
-        httppost.addHeader("token", token);
+        httppost.addHeader("Authorization", "Bearer " + token);
         Log.d("http client post set", url);
 
 
         HttpResponse response = httpclient.execute(httppost);
         Log.d("YourAsync", "Executed");
 
+
+        Log.d("allHeaders", "reading: ");
+        Header[] allHeaders = response.getAllHeaders();
+        for (Header h:allHeaders ) {
+            Log.d(h.getName(),h.getValue() );
+        }
+        Log.d("allHeaders", "end ");
 
         Header[] headers = response.getHeaders("token");
         if (headers.length > 1) {
@@ -78,6 +133,10 @@ public abstract class BaseRepository {
             return EntityUtils.toString(response.getEntity());
 
         } else {
+            HttpEntity entity = response.getEntity();
+            String responseString = EntityUtils.toString(entity, "UTF-8");
+            System.out.println(responseString);
+
             throw new Exception(response.getStatusLine().getReasonPhrase());
         }
 
