@@ -92,10 +92,21 @@
 
             </android.support.design.widget.TextInputLayout>
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:onClick="goRegisterPage"
+                android:text="ثبت نام نکرده اید ؟ ثبت نام" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="190dp" />
+                android:layout_height="140dp" />
 
             <Button
                 android:id="@+id/email_sign_in_button"
@@ -110,18 +121,6 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/skipLogin"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
-
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/blue_button_border"
-                android:text="ورود بدون api"
-                android:textColor="#FBFAFA"
-                android:textStyle="bold" />
-
-            <Button
                 android:id="@+id/skipLogin2"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
@@ -132,6 +131,8 @@
                 android:text="ورود بدون api"
                 android:textColor="#FBFAFA"
                 android:textStyle="bold" />
+
+
 
 
         </LinearLayout>

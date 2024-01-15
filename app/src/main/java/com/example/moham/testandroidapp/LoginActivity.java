@@ -61,6 +61,8 @@ import service.models.UserClockTypeViewModel;
 import static android.Manifest.permission.READ_CONTACTS;
 import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE;
 
+import com.example.moham.testandroidapp.ui.login.RegisterActivity;
+
 
 public class LoginActivity extends BaseActivity implements LoaderCallbacks<Cursor> , LoginResultCallback {
 
@@ -105,7 +107,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
             }
         });
 
-        Button skipLogin = (Button) findViewById(R.id.skipLogin);
+        Button skipLogin = (Button) findViewById(R.id.skipLogin2);
         skipLogin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,15 +116,6 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
             }
         });
 
-
-    Button skipLogin2 = (Button) findViewById(R.id.skipLogin2);
-        skipLogin2.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, LocationTrackingActivity.class));
-
-            }
-        });
 
 
         mLoginFormView = findViewById(R.id.login_form);
@@ -337,6 +330,15 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
     @Override
     public void onLoginFailure(String errorMessage) {
 
+    }
+
+    public void goRegisterPage(View view) {
+
+        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+        startActivity(intent);
+
+        // Specify the enter and exit animations
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
 
