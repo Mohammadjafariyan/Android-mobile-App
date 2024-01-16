@@ -87,6 +87,8 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         getSupportActionBar().hide();
 
 
+      
+
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -115,7 +117,6 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
 
             }
         });
-
 
 
         mLoginFormView = findViewById(R.id.login_form);

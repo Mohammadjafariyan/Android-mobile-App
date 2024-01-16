@@ -2,6 +2,7 @@ package com.example.moham.testandroidapp;
 
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.webkit.CookieManager;
 import android.widget.Toast;
 
 import clock.aut.SingleTon;
@@ -62,6 +63,10 @@ public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
                 SingleTon.getInstance().setNotificationsEnabled(model.getNotificationsEnabled());
                 SingleTon.getInstance().setFaceRecognation(model.getFaceRecognation());
                 SingleTon.getInstance().setClockLastMessage(model.getMessage());
+
+                // Set the JWT as a cookie for the WebView
+                CookieManager cookieManager = CookieManager.getInstance();
+                cookieManager.setCookie(MyGlobal.serverBase, "jwt=" + model.getToken());
 
                 //   if (rememberMeCheckbox.isChecked()) {
 

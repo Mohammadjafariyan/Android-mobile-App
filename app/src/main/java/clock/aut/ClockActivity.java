@@ -13,9 +13,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.example.moham.testandroidapp.LoginActivity;
 import com.example.moham.testandroidapp.R;
@@ -30,14 +32,16 @@ import java.util.List;
 
 import base.BaseActivity;
 import config.setting.SettingActivity;
+import service.ClockData;
 import service.ClockRepository;
+import service.ClocksCardsListAdapter;
 import service.base.ClockType;
 import service.base.MyGlobal;
 import service.models.ClockInViewModelResult;
 import service.models.UserClockTypeViewModel;
 import service.other.SocketCommunication;
 
-public class ClockActivity extends BaseActivity  implements AdapterView.OnItemSelectedListener {
+public class ClockActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
     private static final int GPS_Activity = 1;
     private static final int Camera_Activity = 2;
@@ -65,20 +69,20 @@ public class ClockActivity extends BaseActivity  implements AdapterView.OnItemSe
                 case R.id.navigation_home:
                     //    mTextMessage.setText(R.string.title_home);
                     return true;
-                case R.id.navigation_dashboard:
+      /*          case R.id.navigation_dashboard:
                     //  mTextMessage.setText(R.string.title_dashboard);
                     intent = new Intent(ClockActivity.this
                             , DashboardActivity.class);
                     startActivityForResult(intent, Dashboard_Activity);
 
-                    return true;
-                case R.id.navigation_notifications:
+                    return true;*/
+            /*    case R.id.navigation_notifications:
 
                     //  mTextMessage.setText(R.string.title_notifications);
                     intent = new Intent(ClockActivity.this
                             , SettingActivity.class);
                     startActivityForResult(intent, Setting_Activity);
-                    return true;
+                    return true;*/
                 case R.id.navigation_web:
 
                     //  mTextMessage.setText(R.string.title_notifications);
@@ -112,11 +116,11 @@ public class ClockActivity extends BaseActivity  implements AdapterView.OnItemSe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clock);
-setTitle("ثبت ساعت");
+        setTitle("ثبت ساعت");
 
         getSupportActionBar().hide();
 
-        mTextMessage = (TextView) findViewById(R.id.message);
+        // mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_home);
@@ -155,8 +159,32 @@ setTitle("ثبت ساعت");
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
 
+
+
+
+
+        List<ClockData> cardDataList = new ArrayList<>();
+
+        for (int i = 0; i < 20; i++) {
+            cardDataList.add(new ClockData("Card " + i, "Content " + i));
+
+        }
+        // Add more items as needed...
+
+
+        addCardsToLayout(cardDataList);
     }
 
+
+    private void addCardsToLayout(List<ClockData> dataList) {
+        LinearLayout linearLayout = findViewById(R.id.linearListContainer);
+        ClocksCardsListAdapter adapter = new ClocksCardsListAdapter(this, dataList);
+
+        for (int i = 0; i < adapter.getCount(); i++) {
+            View cardView = adapter.getView(i, null, linearLayout);
+            linearLayout.addView(cardView);
+        }
+    }
 
 
     private void initSocketCommunication() {
@@ -375,7 +403,6 @@ setTitle("ثبت ساعت");
                 clock = clockRepository.ClockIn();
 
 
-
                 SingleTon.getInstance().setMessage(clock.getMessage());
                 SingleTon.getInstance().setSuccess(clock.isSuccess());
                 SingleTon.getInstance().setClockLastMessage(clock.getMessage());
@@ -409,7 +436,6 @@ setTitle("ثبت ساعت");
             }else{
             }
         }*/
-
 
 
     }
@@ -446,6 +472,7 @@ setTitle("ثبت ساعت");
         // Showing selected spinner item
         Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
     }
+
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
     }
@@ -457,18 +484,18 @@ setTitle("ثبت ساعت");
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
-            mProgressView.setVisibility(View.GONE );
+            mProgressView.setVisibility(View.GONE);
 
             if (aBoolean) {
-               // timeTextMessage = (TextView) findViewById(R.id.textView5);
+                // timeTextMessage = (TextView) findViewById(R.id.textView5);
 
-                if(SingleTon.getInstance().getSuccess()){
+                if (SingleTon.getInstance().getSuccess()) {
                     timeTextMessage.setText(SingleTon.getInstance().getMessage());
                     timeTextMessage.setTextColor(Color.GREEN);
                     ringtone();
-                }else{
+                } else {
                     ringtone();
-                    Toast.makeText(ClockActivity.this,SingleTon.getInstance().getMessage() , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ClockActivity.this, SingleTon.getInstance().getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
 

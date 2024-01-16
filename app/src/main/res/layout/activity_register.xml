@@ -8,14 +8,17 @@
     tools:context=".ui.login.RegisterActivity">
 
 
-    <WebView
-        android:id="@+id/registerWebView"
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
 
 </android.support.constraint.ConstraintLayout>

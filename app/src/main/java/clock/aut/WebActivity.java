@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,10 +20,14 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.example.moham.testandroidapp.MyWebViewFragment;
 import com.example.moham.testandroidapp.R;
 import com.google.gson.Gson;
 
 import org.apache.http.util.EncodingUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import config.setting.SettingActivity;
 import service.base.MyGlobal;
@@ -46,7 +51,7 @@ public class WebActivity extends AppCompatActivity
                     startActivityForResult(intent, 6);
 
                     return true;
-                case R.id.navigation_dashboard:
+              /*  case R.id.navigation_dashboard:
                     intent = new Intent(WebActivity.this
                             , DashboardActivity.class);
                     startActivityForResult(intent, 6);
@@ -56,7 +61,7 @@ public class WebActivity extends AppCompatActivity
                     intent = new Intent(WebActivity.this
                             , SettingActivity.class);
                     startActivityForResult(intent, 7);
-                    return true;
+                    return true;*/
                 case R.id.navigation_web:
 
                     return true;
@@ -64,13 +69,19 @@ public class WebActivity extends AppCompatActivity
             return false;
         }
     };
-    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setSelectedItemId(R.id.navigation_web);
+
+       /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         progressBar= (ProgressBar)findViewById(R.id.web_progress);
@@ -98,7 +109,8 @@ public class WebActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+*/
+/*
 
         webView = (WebView) findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -106,23 +118,37 @@ public class WebActivity extends AppCompatActivity
         //  String url="http://demo.sobhansystems.ir/mobile/web/index";
         String url = MyGlobal.serverBaseUrlMobile;
 
-       /* AAWebViewModel vm=new AAWebViewModel();
+       */
+/* AAWebViewModel vm=new AAWebViewModel();
         Gson gson=new Gson();
-        String json=gson.toJson(vm);*/
+        String json=gson.toJson(vm);*//*
+
 
        String token="token="+SingleTon.getInstance().getToken();
 
         webView.postUrl(url,EncodingUtils.getBytes(token, "UTF-8"));
+
+*/
+
+        // Get FragmentManager
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        // Create and add the fragment dynamically
+        MyWebViewFragment myFragment =new  MyWebViewFragment(this,true);
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, myFragment)
+                .commit();
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+      /*  DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-        }
+        }*/
     }
 
     @Override
@@ -153,7 +179,6 @@ public class WebActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        progressBar.setVisibility(View.VISIBLE);
 
         if (id == R.id.nav_gps_locations) {
             webView.loadUrl(MyGlobal.serverBase + "/Mobile/Workplaces/GetDataTable");
@@ -180,13 +205,12 @@ public class WebActivity extends AppCompatActivity
             webView.loadUrl(MyGlobal.serverBase + "/Absence/WorkGroupObligatedRange/GetDataTable");
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+      /*  DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);*/
         return true;
     }
 
     public void setVisiblity(){
-        progressBar.setVisibility(View.VISIBLE);
 
     }
 
@@ -194,14 +218,19 @@ public class WebActivity extends AppCompatActivity
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
+            view.loadUrl(url,getHeadersWithJwt());
             return true;
         }
 
+        private Map<String, String> getHeadersWithJwt() {
+            Map<String, String> headers = new HashMap<>();
+            String token = SingleTon.getInstance().getToken();
+            headers.put("Authorization", "Bearer " + token);
+            return headers;
+        }
 
         public void onPageFinished(WebView view, String url) {
             // do your stuff here
-            progressBar.setVisibility(View.INVISIBLE);
         }
 
     }

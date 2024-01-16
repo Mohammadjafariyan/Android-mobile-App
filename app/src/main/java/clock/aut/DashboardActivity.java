@@ -52,7 +52,7 @@ public class DashboardActivity extends BaseActivity {
                             , ClockActivity.class);
                     startActivityForResult(intent, 6);
                     return true;
-                case R.id.navigation_dashboard:
+            /*    case R.id.navigation_dashboard:
                     return true;
                 case R.id.navigation_notifications:
 
@@ -60,7 +60,7 @@ public class DashboardActivity extends BaseActivity {
                     intent = new Intent(DashboardActivity.this
                             , SettingActivity.class);
                     startActivityForResult(intent, 5);
-                    return true;
+                    return true;*/
                 case R.id.navigation_web:
 
                     //  mTextMessage.setText(R.string.title_notifications);
@@ -85,7 +85,7 @@ public class DashboardActivity extends BaseActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.dashboardBottomMenu);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.setSelectedItemId(R.id.navigation_dashboard);
+//        navigation.setSelectedItemId(R.id.navigation_dashboard);
 
         progressBar = (ProgressBar) findViewById(R.id.dashboard_progress);
 

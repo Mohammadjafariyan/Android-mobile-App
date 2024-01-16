@@ -1,15 +1,24 @@
 package com.example.moham.testandroidapp
 
+import android.R.attr
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.JavascriptInterface
 import android.webkit.WebSettings
 import android.webkit.WebView
+import android.webkit.WebViewClient
+import clock.aut.SingleTon
+import org.apache.http.util.EncodingUtils
 import service.base.MyGlobal
 
-class MyWebViewFragment : Fragment() {
+
+class MyWebViewFragment(var mContext: Context,var isPost:Boolean=false) : Fragment() {
     private lateinit var webView: WebView
 
     override fun onCreateView(
@@ -23,9 +32,26 @@ class MyWebViewFragment : Fragment() {
         webSettings.javaScriptEnabled = true
         // Add other WebView settings as needed
 
+        webView.webViewClient=MyWebViewClient();
+
         // Load the initial URL or restore the state if available
         if (savedInstanceState == null) {
-            webView.loadUrl("${MyGlobal.serverBase}/Account/Login")
+
+            if (isPost){
+                //  String url="http://demo.sobhansystems.ir/mobile/web/index";
+                val url = MyGlobal.serverBaseUrlMobile
+
+                val token = "token=" + SingleTon.getInstance().token
+
+                webView.postUrl(url, EncodingUtils.getBytes(token, "UTF-8"))
+            }
+            else{
+                webView.loadUrl("${MyGlobal.serverBase}/Account/Register")
+                webView.addJavascriptInterface(MyJavaScriptInterface(mContext), "AndroidBridge")
+
+            }
+
+
         }
 
         return view
@@ -36,10 +62,50 @@ class MyWebViewFragment : Fragment() {
         webView.saveState(outState)
     }
 
+
+
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
         if (savedInstanceState != null) {
             webView.restoreState(savedInstanceState)
         }
     }
+
+    private class MyWebViewClient : WebViewClient() {
+        @Suppress("OverridingDeprecatedMember")
+        override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+            // Prevent links from opening in external browser
+            view.loadUrl(url,getHeadersWithJwt())
+            return true
+        }
+
+        private fun getHeadersWithJwt(): MutableMap<String, String> {
+            val headers: MutableMap<String, String> = HashMap()
+            val token = SingleTon.getInstance().token;
+            headers["Authorization"] = "Bearer $token"
+            return headers
+        }
+    }
+
+
+    class MyJavaScriptInterface(var context: Context?) {
+
+
+        @JavascriptInterface
+        fun goLogin(data: String?) {
+            // Handle the received data in Android
+            // You can perform any action with the data here
+
+
+            // Start a new activity
+            val intent = Intent(context, LoginActivity::class.java)
+            intent.putExtra("key_data", attr.data) // You can pass data to the new activity
+
+            context!!.startActivity(intent)
+
+            // Optionally, finish the current activity if you don't want to go back to it
+            (context as Activity).finish()
+        }
+    }
+
 }

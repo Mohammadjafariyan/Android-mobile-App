@@ -62,13 +62,13 @@ public class SettingActivity extends BaseActivity {
                     startActivityForResult(intent, 6);
 
                     return true;
-                case R.id.navigation_dashboard:
+            /*    case R.id.navigation_dashboard:
                     intent = new Intent(SettingActivity.this
                             , DashboardActivity.class);
                     startActivityForResult(intent, 6);
                     return true;
                 case R.id.navigation_notifications:
-                    return true;
+                    return true;*/
                 case R.id.navigation_web:
 
                     //  mTextMessage.setText(R.string.title_notifications);
@@ -94,7 +94,7 @@ public class SettingActivity extends BaseActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.rnavigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.setSelectedItemId(R.id.navigation_notifications);
+        //navigation.setSelectedItemId(R.id.navigation_notifications);
         oneDeviceEnabledSwitch = (Switch) findViewById(R.id.oneDeviceEnabled);
         faceRecognation = (Switch) findViewById(R.id.faceRecognation);
         notificationsEnabled = (Switch) findViewById(R.id.notificationsEnabled);

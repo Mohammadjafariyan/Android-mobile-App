@@ -8,20 +8,20 @@
         android:title="@string/title_home" />
 
     <item
+        android:id="@+id/navigation_web"
+        android:icon="@drawable/ic_menu_manage"
+        android:title="@string/title_web" />
+<!--
+
+
+    <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_dashboard_black_24dp"
         android:title="@string/title_dashboard" />
 
-
-    <item
-        android:id="@+id/navigation_web"
-        android:icon="@drawable/ic_menu_manage"
-        android:title="@string/title_web" />
-
-
     <item
         android:id="@+id/navigation_notifications"
         android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_notifications" />
+        android:title="@string/title_notifications" />-->
 
 </menu>

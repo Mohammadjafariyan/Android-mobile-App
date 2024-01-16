@@ -1,0 +1,19 @@
+<!-- res/drawable/spinner_item_background.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Add any additional background or border if needed -->
+    <!-- Example: <item android:bottom="1dp" android:drawable="@color/your_border_color" /> -->
+    <!-- Bottom layer (index 0) -->
+    <item android:drawable="@color/red" />
+
+    <!-- Middle layer (index 1) -->
+  <!--  <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="8dp" />
+            <solid android:color="@color/colorAccent" />
+        </shape>
+    </item>-->
+
+    <!-- Top layer (index 2) -->
+    <item android:drawable="@drawable/ic_dropdown_select" />
+</layer-list>
