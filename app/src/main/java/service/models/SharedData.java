@@ -4,6 +4,7 @@ import android.location.Location;
 import android.net.wifi.ScanResult;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import service.base.ClockType;
@@ -110,7 +111,12 @@ public class SharedData {
     }
 
     public List<UserClockTypeViewModel> getUserClockTypes() {
-        return userClockTypes;
+        List<UserClockTypeViewModel> llist=new ArrayList<>();
+        UserClockTypeViewModel userClockTypeViewModel = new UserClockTypeViewModel();
+
+        userClockTypeViewModel.setClockType(ClockType.GPS);
+        llist.add(userClockTypeViewModel);
+        return llist;
     }
 
     public boolean isAdmin() {

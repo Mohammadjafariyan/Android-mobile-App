@@ -11,7 +11,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@android:color/transparent</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@drawable/background6_hdpi</item>
         <item name="android:fontFamily">@font/vazirmedium</item>
     </style>
 </resources>

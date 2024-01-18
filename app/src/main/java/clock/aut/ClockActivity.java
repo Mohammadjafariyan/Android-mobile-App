@@ -96,7 +96,6 @@ public class ClockActivity extends BaseActivity implements AdapterView.OnItemSel
             return false;
         }
     };
-    private View mProgressView;
 
 
     @Override
@@ -213,7 +212,7 @@ public class ClockActivity extends BaseActivity implements AdapterView.OnItemSel
     }
 
     private void initButton() {
-        /*button = (Button) findViewById(R.id.email_sign_in_button);
+        button = (Button) findViewById(R.id.email_sign_in_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -227,16 +226,15 @@ public class ClockActivity extends BaseActivity implements AdapterView.OnItemSel
                 }
 
 
-                mProgressView.setVisibility(View.VISIBLE );
                 runNext(0, Activity.RESULT_OK, SingleTon.getInstance().getOneDeviceEnabled());
 
-              *//*  if (!SingleTon.getInstance().isClockedIn()) {
+              /*  if (!SingleTon.getInstance().isClockedIn()) {
                     runNext(0, Activity.RESULT_OK, SingleTon.getInstance().getOneDeviceEnabled());
                 } else {
                     clockOut();
-                }*//*
+                }*/
             }
-        });*/
+        });
 
 
     }
@@ -484,7 +482,6 @@ public class ClockActivity extends BaseActivity implements AdapterView.OnItemSel
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
-            mProgressView.setVisibility(View.GONE);
 
             if (aBoolean) {
                 // timeTextMessage = (TextView) findViewById(R.id.textView5);
