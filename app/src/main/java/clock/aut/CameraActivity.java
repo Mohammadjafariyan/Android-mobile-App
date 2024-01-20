@@ -9,23 +9,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Camera;
 import android.net.Uri;
 import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import android.os.Bundle;
 import android.widget.ImageView;
 
-import com.example.moham.testandroidapp.R;
+import com.bulutsoft.attendance.R;
 
 import base.BaseActivity;
 import service.other.CameraPreview;
-
-import static android.content.Intent.FLAG_ACTIVITY_FORWARD_RESULT;
-import static android.content.Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP;
-import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class CameraActivity extends BaseActivity {
     private static final int CAMERA_REQUEST = 1888;
@@ -72,6 +66,7 @@ public class CameraActivity extends BaseActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             imageView = new ImageView(CameraActivity.this);

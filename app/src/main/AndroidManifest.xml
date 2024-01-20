@@ -1,41 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.moham.testandroidapp"
-    android:installLocation="auto">
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <!-- Always include this permission -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Include only if your app benefits from precise location access. -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission
-        android:name="android.permission.AUTHENTICATE_ACCOUNTS"
-        android:maxSdkVersion="22" />
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-    <uses-permission
-        android:name="android.permission.GET_ACCOUNTS"
-        android:maxSdkVersion="22" />
-    <uses-permission android:name="aninstallLocationdroid.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" /> <!-- <uses-permission android:name="android.permission.CAMERA" /> -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
-        android:name="start.MyApplication"
-        android:usesCleartextTraffic="true"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Theme.BulutSoftAttendance"
+        tools:targetApi="31" >
+
+
         <activity
-            android:name=".ui.login.RegisterActivity"
+            android:name="com.example.moham.testandroidapp.ui.login.RegisterActivity"
             android:exported="false"
             android:label="@string/title_activity_register" />
-        <activity android:name="clock.aut.LocationTrackingActivity" />
 
         <service
             android:name="service.GenericAccountService"
@@ -59,7 +41,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name="com.example.moham.testandroidapp.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AsharDashar">
 
@@ -92,9 +74,7 @@
         <activity
             android:name="clock.aut.WifiActivity"
             android:theme="@style/AsharDashar" />
-        <activity
-            android:name="clock.aut.QRCodeActivity"
-            android:theme="@style/AsharDashar" />
+
         <activity
             android:name="config.setting.SettingActivity"
             android:label="@string/title_activity_setting"
@@ -106,19 +86,35 @@
         <activity android:name="config.setting.FaceConfigActivity" />
         <activity android:name="config.setting.WifiConfigActivity" />
         <activity android:name="clock.aut.DashboardActivity" />
-        <activity
-            android:name="clock.aut.PersonnelDetailActivity"
-            android:label="@string/title_activity_personnel_detail"
-            android:theme="@style/AsharDashar.NoActionBar" />
-        <activity android:name="clock.aut.PersonnelInMapActivity" />
-        <activity
-            android:name="clock.aut.ShowUserLocationActivity"
-            android:label="@string/title_activity_show_user_location"
-            android:theme="@style/AsharDashar.NoActionBar" />
+
         <activity
             android:name="clock.aut.WebActivity"
             android:label="@string/title_activity_web"
             android:theme="@style/AsharDashar.NoActionBar" />
+
+
     </application>
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Include only if your app benefits from precise location access. -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+
+
+    <uses-permission
+        android:name="android.permission.AUTHENTICATE_ACCOUNTS"
+        android:maxSdkVersion="22" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission
+        android:name="android.permission.GET_ACCOUNTS"
+        android:maxSdkVersion="22" />
+    <uses-permission android:name="aninstallLocationdroid.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" /> <!-- <uses-permission android:name="android.permission.CAMERA" /> -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
 
 </manifest>

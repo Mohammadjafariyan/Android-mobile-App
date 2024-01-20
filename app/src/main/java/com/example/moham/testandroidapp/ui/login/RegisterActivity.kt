@@ -1,24 +1,21 @@
 package com.example.moham.testandroidapp.ui.login
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.webkit.WebView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.moham.testandroidapp.MyWebViewFragment
-import com.example.moham.testandroidapp.R
-import com.example.moham.testandroidapp.databinding.ActivityRegisterBinding
+import com.bulutsoft.attendance.R
 
 
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var webView: WebView
     private lateinit var loginViewModel: LoginViewModel
-    private lateinit var binding: ActivityRegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityRegisterBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_register)
 
 
         // Get FragmentManager

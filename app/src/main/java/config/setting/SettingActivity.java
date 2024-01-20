@@ -8,10 +8,6 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,8 +19,12 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.example.moham.testandroidapp.LoginActivity;
-import com.example.moham.testandroidapp.R;
+import com.bulutsoft.attendance.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.time.Clock;
 import java.util.Set;

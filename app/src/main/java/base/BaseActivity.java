@@ -12,12 +12,13 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.bulutsoft.attendance.R;
 import com.example.moham.testandroidapp.LoginActivity;
-import com.example.moham.testandroidapp.R;
 
 import clock.aut.ClockActivity;
 import clock.aut.GPSActivity;

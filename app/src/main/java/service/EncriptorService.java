@@ -2,7 +2,8 @@ package service;
 
 import android.graphics.Bitmap;
 
-import org.apache.commons.codec.binary.Base64;
+
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.codec.binary.Base64;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;

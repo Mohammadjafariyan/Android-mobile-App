@@ -1,10 +1,9 @@
 package config.setting;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.moham.testandroidapp.R;
+import com.bulutsoft.attendance.R;
 
 import base.BaseActivity;
 

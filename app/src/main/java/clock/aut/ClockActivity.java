@@ -6,8 +6,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,9 +17,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
+
+import com.bulutsoft.attendance.R;
 import com.example.moham.testandroidapp.LoginActivity;
-import com.example.moham.testandroidapp.R;
-import com.github.nkzawa.socketio.client.Socket;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -39,7 +40,6 @@ import service.base.ClockType;
 import service.base.MyGlobal;
 import service.models.ClockInViewModelResult;
 import service.models.UserClockTypeViewModel;
-import service.other.SocketCommunication;
 
 public class ClockActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
@@ -54,13 +54,12 @@ public class ClockActivity extends BaseActivity implements AdapterView.OnItemSel
     private TextView timeTextMessage;
     private Button button;
 
-    private SocketCommunication socketCommunication;
 
     private ClockRepository clockRepository = new ClockRepository();
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private NavigationBarView.OnItemSelectedListener mOnNavigationItemSelectedListener
+            = new NavigationBarView.OnItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -121,7 +120,7 @@ public class ClockActivity extends BaseActivity implements AdapterView.OnItemSel
 
         // mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setOnItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_home);
 
         setCurrentTime(false);
@@ -186,7 +185,7 @@ public class ClockActivity extends BaseActivity implements AdapterView.OnItemSel
     }
 
 
-    private void initSocketCommunication() {
+    /*private void initSocketCommunication() {
 
 
         if (SingleTon.getInstance().getNotificationsEnabled()) {
@@ -209,7 +208,7 @@ public class ClockActivity extends BaseActivity implements AdapterView.OnItemSel
 
 
         }
-    }
+    }*/
 
     private void initButton() {
         button = (Button) findViewById(R.id.email_sign_in_button);
@@ -286,9 +285,9 @@ public class ClockActivity extends BaseActivity implements AdapterView.OnItemSel
             case CameraSelfie:
                 activityClass = CameraActivity.class;
                 break;
-            case QRCode:
+         /*   case QRCode:
                 activityClass = QRCodeActivity.class;
-                break;
+                break;*/
             default:
                 try {
                     throw new Exception("هیچ نوع اکتیویتی یافت نشد");

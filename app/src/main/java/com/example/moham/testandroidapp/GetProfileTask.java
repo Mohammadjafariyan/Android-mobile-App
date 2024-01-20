@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.widget.Toast;
 
+import com.bulutsoft.attendance.R;
+
 import clock.aut.SingleTon;
 import service.LoginRepository;
 import service.ProfileClient;

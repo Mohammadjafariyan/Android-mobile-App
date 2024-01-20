@@ -3,11 +3,10 @@ package config.setting;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 
-import com.example.moham.testandroidapp.R;
+import com.bulutsoft.attendance.R;
 
 import clock.aut.CameraActivity;
 import clock.aut.SingleTon;

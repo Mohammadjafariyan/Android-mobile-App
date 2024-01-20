@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.webkit.CookieManager;
 import android.widget.Toast;
 
+import com.bulutsoft.attendance.R;
+
 import clock.aut.SingleTon;
 import service.LoginRepository;
 import service.base.MyGlobal;

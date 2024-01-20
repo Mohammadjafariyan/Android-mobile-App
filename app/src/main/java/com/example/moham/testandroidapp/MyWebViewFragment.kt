@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +12,10 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.fragment.app.Fragment
 import clock.aut.SingleTon
-import org.apache.http.util.EncodingUtils
+import com.bulutsoft.attendance.R
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.util.EncodingUtils
 import service.base.MyGlobal
 
 

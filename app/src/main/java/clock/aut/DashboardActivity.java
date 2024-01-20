@@ -2,10 +2,6 @@ package clock.aut;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,22 +9,15 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.moham.testandroidapp.LoginActivity;
-import com.example.moham.testandroidapp.R;
 
-import java.io.IOException;
-import java.time.Clock;
-import java.util.Arrays;
-import java.util.List;
+import androidx.annotation.NonNull;
+
+import com.bulutsoft.attendance.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import base.BaseActivity;
-import config.setting.FaceConfigActivity;
-import config.setting.OfficeLocationActivity;
-import config.setting.SettingActivity;
-import config.setting.WifiConfigActivity;
 import service.DashboardItemRepository;
 import service.models.PersonnelClockStatusViewModel;
 
@@ -100,10 +89,10 @@ public class DashboardActivity extends BaseActivity {
         hideIfUserisNotAdmin();
 
 
-        initPullButton();
+        //initPullButton();
     }
 
-    private void initPullButton() {
+    /*private void initPullButton() {
         SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -112,7 +101,7 @@ public class DashboardActivity extends BaseActivity {
                 pullToRefresh.setRefreshing(false);
             }
         });
-    }
+    }*/
 
 
     public void doneProgress(){
@@ -128,14 +117,14 @@ public class DashboardActivity extends BaseActivity {
     private void initButton() {
 
         showInMapButton = (Button) findViewById(R.id.showInMapButton);
-        showInMapButton.setOnClickListener(new View.OnClickListener() {
+     /*   showInMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DashboardActivity.this
                         , PersonnelInMapActivity.class);
                 startActivityForResult(intent, 7);
             }
-        });
+        });*/
     }
 
 
@@ -168,13 +157,13 @@ public class DashboardActivity extends BaseActivity {
                     }
 
 
-                    Intent intent = new Intent(DashboardActivity.this
+                 /*   Intent intent = new Intent(DashboardActivity.this
                             , PersonnelDetailActivity.class);
 
 
                     PersonnelClockStatusViewModel model = models[position];
                     intent.putExtra("PersonnelId", model.getPersonnelId());
-                    startActivityForResult(intent, 5);
+                    startActivityForResult(intent, 5);*/
 
                 }
             });
